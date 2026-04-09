@@ -1,14 +1,26 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg site-navbar">
+  <div class="container-fluid site-navbar__inner">
+    <a class="navbar-brand site-brand" href="/">
+      <span class="site-brand__mark"><i class="bi bi-house-heart-fill"></i></span>
+      <span>StayVista</span>
+    </a>
+    <button class="navbar-toggler site-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="/listings">All Listings</a>
-        <a class="nav-link" href="/listings/new">Add new Listing</a>
+      <div class="navbar-nav ms-auto site-nav-group">
+        <a class="nav-link site-nav-link active" aria-current="page" href="/">
+          <i class="bi bi-house-door"></i>
+          Home
+        </a>
+        <a class="nav-link site-nav-link" href="/listings">
+          <i class="bi bi-grid-3x3-gap"></i>
+          All Listings
+        </a>
+        <a class="nav-link site-nav-link" href="/listings/new">
+          <i class="bi bi-plus-circle"></i>
+          Add Listing
+        </a>
       </div>
     </div>
   </div>

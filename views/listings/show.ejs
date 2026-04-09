@@ -1,27 +1,41 @@
 <%- layout("/layouts/boilerplate") %>
 
-<body>
+<section class="detail-page container py-5">
+    <div class="detail-layout">
+        <div class="detail-media">
+            <img src="<%= listing.image && listing.image.url ? listing.image.url : '' %>" alt="<%= listing.title %>">
+        </div>
 
-    <h3>Listing Details</h3>
+        <div class="detail-panel">
+            <span class="eyebrow"><i class="bi bi-award"></i> Featured stay</span>
+            <h1><%= listing.title %></h1>
+            <p class="detail-panel__description"><%= listing.description %></p>
 
-    <ul>
-        <li><%= listing.title %></li>
-        <li><%= listing.description %></li>
-        <li> &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
-        <li><%= listing.location %></li>
-        <li><%= listing.country %></li>
+            <div class="detail-price">&#8377; <%= Number(listing.price || 0).toLocaleString("en-IN") %> <span>/ night</span></div>
 
-        <br>
-        <a href="/listings/<%= listing._id %>/edit"
-            style="text-decoration: none;"> 
-            Edit this Listing
-        </a>
-        <br>
-        <br>
-        <form method="post" action="/listings/<%= listing._id %>?_method=Delete">
-            <button>Delete this listing</button>
-        </form>
+            <div class="detail-meta">
+                <div>
+                    <span>Location</span>
+                    <strong><%= listing.location %></strong>
+                </div>
+                <div>
+                    <span>Country</span>
+                    <strong><%= listing.country %></strong>
+                </div>
+            </div>
 
-    </ul>
-    
-</body>
+            <div class="detail-actions">
+                <a href="/listings/<%= listing._id %>/edit" class="btn btn-accent">
+                    <i class="bi bi-pencil-square"></i>
+                    Edit Listing
+                </a>
+                <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+                    <button class="btn btn-ghost btn-ghost--danger" type="submit">
+                        <i class="bi bi-trash3"></i>
+                        Delete Listing
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

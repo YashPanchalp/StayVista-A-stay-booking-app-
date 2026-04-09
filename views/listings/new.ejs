@@ -1,36 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wanderlust</title>
-</head>
-<body>
+<%- layout("/layouts/boilerplate") %>
 
-    <h3>Create a new Listing</h3>
-    
-    <form method="post" action="/listings">
+<section class="form-page container py-5">
+    <div class="form-page__intro">
+        <span class="eyebrow"><i class="bi bi-pencil-square"></i> New listing</span>
+        <h1>Create a new stay</h1>
+        <p>Add the property details below to publish a polished StayVista listing.</p>
+    </div>
 
-        Title : <input name="listing[title]" placeholder="enter the title" type="text">
-        <br><br>
+    <div class="form-shell">
+        <form method="post" action="/listings" class="listing-form">
+            <div class="form-grid">
+                <label class="field">
+                    <span>Title</span>
+                    <input name="listing[title]" placeholder="Enter the title" type="text" required>
+                </label>
 
-        Description : <textarea name="listing[description]" placeholder="enter the desc" type="text"></textarea>
-        <br><br>
+                <label class="field field--wide">
+                    <span>Description</span>
+                    <textarea name="listing[description]" placeholder="Write a short description" rows="5"></textarea>
+                </label>
 
-        Image url : <input name="listing[image]" placeholder="enter the image URL/link" type="text">
-        <br><br>
+                <label class="field field--wide">
+                    <span>Image URL</span>
+                    <input name="listing[image][url]" placeholder="Paste a high-quality image URL" type="text" required>
+                </label>
 
-        Price : <input name="listing[price]" placeholder="enter the price" type="number">
-        <br><br>
+                <label class="field">
+                    <span>Price</span>
+                    <input name="listing[price]" placeholder="Enter the price" type="number" min="0" required>
+                </label>
 
-        Country: <input name="listing[country]" placeholder="enter the country" type="text">
-        <br><br>
+                <label class="field">
+                    <span>Country</span>
+                    <input name="listing[country]" placeholder="Enter the country" type="text" required>
+                </label>
 
-        Location : <input name="listing[location]" placeholder="enter the location" type="text">
-        <br><br>
+                <label class="field field--wide">
+                    <span>Location</span>
+                    <input name="listing[location]" placeholder="Enter the location" type="text" required>
+                </label>
+            </div>
 
-        <button>Add</button>
-
-    </form>
-</body>
-</html>
+            <div class="form-actions">
+                <a href="/listings" class="btn btn-ghost">Cancel</a>
+                <button class="btn btn-accent" type="submit">Add Listing</button>
+            </div>
+        </form>
+    </div>
+</section>

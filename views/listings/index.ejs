@@ -1,12 +1,44 @@
 <%- layout("/layouts/boilerplate") %>
-<body>
-    <h3>All Listings</h3>
 
-    <ul>
-        
-        <% for(let listing of allListings) { %>
-        <!-- click on title go to show route -> GET /listings/:id -->
-        <li> <a href="/listings/<%= listing._id %>"><%= listing.title %></a> </li> 
-        <% } %>
-    </ul>
-</body>
+<section class="listing-page container py-5">
+    <div class="listing-page__header">
+        <div>
+            <span class="eyebrow"><i class="bi bi-stars"></i> Curated collection</span>
+            <h1>All Listings</h1>
+            <p>Browse stylish stays, premium hotels, and homestays built for comfort and clean design.</p>
+        </div>
+        <a class="btn btn-accent" href="/listings/new">
+            <i class="bi bi-plus-lg"></i>
+            Add Listing
+        </a>
+    </div>
+
+    <% if (allListings.length) { %>
+        <div class="listing-grid">
+            <% allListings.forEach((listing, index) => { %>
+                <a class="listing-card" href="/listings/<%= listing._id %>" style="--card-index:<%= index %>">
+                    <div class="listing-card__image-wrap">
+                        <img src="<%= listing.image && listing.image.url ? listing.image.url : '' %>" class="listing-card__image" alt="<%= listing.title %>">
+                        <span class="listing-card__tag"><i class="bi bi-geo-alt-fill"></i> <%= listing.location %></span>
+                    </div>
+                    <div class="listing-card__body">
+                        <div>
+                            <h2><%= listing.title %></h2>
+                            <p><%= listing.country %></p>
+                        </div>
+                        <div class="listing-card__footer">
+                            <span class="listing-card__price">&#8377; <%= Number(listing.price || 0).toLocaleString("en-IN") %> <small>/ night</small></span>
+                            <span class="listing-card__action">View stay <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </a>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="empty-state">
+            <i class="bi bi-building-exclamation"></i>
+            <h2>No listings yet</h2>
+            <p>Add the first StayVista listing to start building your collection.</p>
+        </div>
+    <% } %>
+</section>
