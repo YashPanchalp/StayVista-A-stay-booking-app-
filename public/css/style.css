@@ -48,10 +48,13 @@ body.site-body::before {
     width: 100%;
 }
 
-a {
-    color: var(--text);
-    text-decoration: none;
-    transition: color 200ms ease, opacity 200ms ease;
+section.listing-page,
+section.form-page,
+section.detail-page {
+    max-width: 2120px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
 a:hover {
@@ -92,9 +95,35 @@ img {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.home-hero ~ .site-navbar,
-.site-navbar:has(~ .home-hero) {
-    display: none;
+/* Low opacity navbar when home hero section is present on page */
+.site-body:has(.home-hero) .site-navbar {
+    position: fixed;
+    z-index: 1020;
+    width: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.site-body:has(.home-hero) .site-navbar .site-brand {
+    color: white !important;
+}
+
+.site-body:has(.home-hero) .site-navbar .site-brand__mark {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+}
+
+.site-body:has(.home-hero) .site-navbar .site-nav-link {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.site-body:has(.home-hero) .site-navbar .site-nav-link:hover,
+.site-body:has(.home-hero) .site-navbar .site-nav-link.active {
+    background: rgba(255, 255, 255, 0.25);
+    color: white !important;
+    backdrop-filter: blur(10px);
 }
 
 .site-navbar__inner {
@@ -316,15 +345,13 @@ img {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: -4rem;
-    padding-top: 4rem;
 }
 
 .home-hero::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(20, 15, 10, 0.48));
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.32), rgba(20, 15, 10, 0.45));
 }
 
 .home-hero__content {
@@ -362,8 +389,8 @@ img {
     font-size: 1.1rem;
     line-height: 1.7;
     max-width: 56rem;
-    margin: 0 auto;
-    font-weight: 400;
+    /* margin: 0 auto; */
+    font-weight: 600;
 }
 
 .home-hero__content p {
@@ -417,10 +444,24 @@ img {
 .listing-page__header,
 .form-page__intro {
     display: flex;
-    align-items: end;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 2rem;
+}
+
+.listing-page__header > div,
+.form-page__intro > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.listing-page__header .btn,
+.form-page__intro .btn {
+    align-self: flex-start;
+    margin-top: 0.5rem;
 }
 
 .listing-page__header h1,
@@ -430,9 +471,39 @@ img {
     color: var(--text);
 }
 
+.listing-page__header .eyebrow,
+.detail-panel .eyebrow {
+    color: var(--accent);
+    border-color: var(--accent-soft);
+    background: var(--accent-soft);
+}
+
+.listing-page__header p,
+.detail-panel__description {
+    color: rgba(44, 44, 44, 0.88);
+}
+
+.listing-page__header > div p {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: var(--accent-strong);
+    font-weight: 500;
+    margin-top: 0.75rem;
+    text-align: left !important;
+}
+
+.form-page__intro > div p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--accent-strong);
+    font-weight: 500;
+    margin-top: 0.75rem;
+    text-align: left;
+}
+
 .listing-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
     margin-bottom: 2rem;
 }
@@ -451,6 +522,8 @@ img {
     transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
     animation: cardRise 0.75s ease both;
     animation-delay: calc(var(--card-index) * 85ms);
+    text-decoration: none;
+    color: var(--text);
 }
 
 .listing-card::before {
@@ -469,7 +542,7 @@ img {
 
 .listing-card__image-wrap {
     position: relative;
-    height: 250px;
+    height: 320px;
     overflow: hidden;
 }
 
@@ -513,6 +586,9 @@ img {
     line-height: 1.3;
     font-family: "Cormorant Garamond", serif;
     font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    border: none;
 }
 
 .listing-card__body p {
@@ -545,6 +621,7 @@ img {
     gap: 0.45rem;
     color: var(--accent);
     font-weight: 700;
+    text-decoration: none;
 }
 
 .empty-state {
@@ -666,6 +743,26 @@ img {
 
 .detail-panel h1 {
     color: var(--text);
+    font-size: clamp(2.2rem, 3vw, 3.5rem);
+}
+
+/* White text styling for listing and show pages */
+.listing-page .eyebrow,
+.detail-page .eyebrow {
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    border-color: transparent;
+    text-shadow: none;
+}
+
+.listing-page__header > div .eyebrow {
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    border: none;
+}
+
+.detail-panel h1 {
+    color: var(--text);
 }
 
 .detail-panel__description {
@@ -680,12 +777,16 @@ img {
     margin: 1.5rem 0 1.8rem;
     font-size: 2rem;
     font-weight: 800;
-    color: var(--accent-strong);
+    color: #ffffff;
     font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    padding: 0.8rem 1.5rem;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(196, 149, 106, 0.25);
 }
 
 .detail-price span {
-    color: var(--muted);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
     font-weight: 500;
 }
@@ -770,7 +871,7 @@ img {
     }
     
     .listing-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
