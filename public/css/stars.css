@@ -1,0 +1,30 @@
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #ffd700;
+    transition: color 0.2s ease-in-out;
+}
+
+/* Base state - Outline star */
+.star-rating label i::before {
+    content: "\F588"; /* bi-star */
+}
+
+/* Hover state & selected state - Filled star with color */
+.star-rating input[type="radio"]:checked ~ label i::before,
+.star-rating label:hover ~ label i::before,
+.star-rating label:hover i::before {
+    content: "\F586"; /* bi-star-fill */
+}

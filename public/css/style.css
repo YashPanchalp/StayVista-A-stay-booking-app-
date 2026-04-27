@@ -51,7 +51,6 @@ body.site-body::before {
 section.listing-page,
 section.form-page,
 section.detail-page {
-    max-width: 2120px;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -381,16 +380,23 @@ img {
     margin-bottom: 1.2rem;
 }
 
-.home-hero__content p,
-.listing-page__header p,
-.form-page__intro p,
-.detail-panel__description {
+.home-hero__content p {
     color: rgba(255, 255, 255, 0.9);
     font-size: 1.1rem;
     line-height: 1.7;
     max-width: 56rem;
     /* margin: 0 auto; */
     font-weight: 600;
+}
+
+.listing-page__header p,
+.form-page__intro p,
+.detail-panel__description {
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 56rem;
+    font-weight: 400;
 }
 
 .home-hero__content p {

@@ -2,42 +2,54 @@
 
 <section class="form-page container py-5">
     <div class="form-page__intro">
-        <span class="eyebrow"><i class="bi bi-sliders"></i> Edit listing</span>
-        <h1>Refine the listing</h1>
-        <p>Update the stay details while keeping the same polished StayVista presentation.</p>
+        <div>
+            <span class="eyebrow"><i class="bi bi-sliders"></i> Edit listing</span>
+            <h1>Refine the listing</h1>
+            <p>Update the stay details while keeping the same polished StayVista presentation.</p>
+        </div>
     </div>
 
     <div class="form-shell">
-        <form method="post" action="/listings/<%= listing._id %>?_method=PUT" class="listing-form">
+        <form method="post" action="/listings/<%= listing._id %>?_method=PUT" class="listing-form needs-validation" novalidate>
             <div class="form-grid">
                 <label class="field">
                     <span>Title</span>
-                    <input name="listing[title]" value="<%= listing.title %>" type="text" required>
+                    <input name="listing[title]" class="form-control" value="<%= listing.title %>" type="text" required>
+                    <div class="invalid-feedback">Title is required</div>
+                    <div class="valid-feedback">Looks good!</div>
                 </label>
 
                 <label class="field field--wide">
                     <span>Description</span>
-                    <textarea name="listing[description]" rows="5"><%= listing.description %></textarea>
+                    <textarea name="listing[description]" class="form-control" rows="5"><%= listing.description %></textarea>
                 </label>
 
                 <label class="field field--wide">
                     <span>Image URL</span>
-                    <input name="listing[image][url]" value="<%= listing.image && listing.image.url ? listing.image.url : '' %>" type="text" required>
+                    <input name="listing[image][url]" class="form-control" value="<%= listing.image && listing.image.url ? listing.image.url : '' %>" type="text" required>
+                    <div class="invalid-feedback">A valid image URL is required</div>
+                    <div class="valid-feedback">Looks good!</div>
                 </label>
 
                 <label class="field">
                     <span>Price</span>
-                    <input name="listing[price]" value="<%= listing.price %>" type="number" min="0" required>
+                    <input name="listing[price]" class="form-control" value="<%= listing.price %>" type="number" min="0" required>
+                    <div class="invalid-feedback">Please provide a valid price</div>
+                    <div class="valid-feedback">Looks good!</div>
                 </label>
 
                 <label class="field">
                     <span>Country</span>
-                    <input name="listing[country]" value="<%= listing.country %>" type="text" required>
+                    <input name="listing[country]" class="form-control" value="<%= listing.country %>" type="text" required>
+                    <div class="invalid-feedback">Country is required</div>
+                    <div class="valid-feedback">Looks good!</div>
                 </label>
 
                 <label class="field field--wide">
                     <span>Location</span>
-                    <input name="listing[location]" value="<%= listing.location %>" type="text" required>
+                    <input name="listing[location]" class="form-control" value="<%= listing.location %>" type="text" required>
+                    <div class="invalid-feedback">Location is required</div>
+                    <div class="valid-feedback">Looks good!</div>
                 </label>
             </div>
 

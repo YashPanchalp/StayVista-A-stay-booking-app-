@@ -28,7 +28,12 @@ const listingSchema = new Schema({
     }, 
     country:{
         type: String,
-    }
+    },
+    //passing reviews as the object id
+    reviews:[{
+        type : Schema.Types.ObjectId,
+        ref : "Review",
+    }]
 });
         
 //model1-> listing (model) apply shcema
