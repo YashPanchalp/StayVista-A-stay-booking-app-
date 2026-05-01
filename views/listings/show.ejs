@@ -93,6 +93,10 @@
                                         </div>
                                     </div>
                                     <p class="card-text text-muted mb-0 small"><%= review.comment %></p>
+                                    <br>
+                                    <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                                        <button>Delete</button>
+                                    </form>
                                 </div>
                             </div>
                         <% } %>

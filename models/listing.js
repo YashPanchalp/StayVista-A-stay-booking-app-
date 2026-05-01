@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Review = require("./review");
 
 const listingSchema = new Schema({
     title: {
@@ -36,6 +37,14 @@ const listingSchema = new Schema({
     }]
 });
         
+//middleware to called when any listing deleted -> delete reviews
+//from findByIdAndDelete -> conveted as findOneAndDelete
+listingSchema.post("findOneAndDelete", async (listing) => {
+  if(listing){
+    await Review.deleteMany( { _id: { $in: listing.reviews}});
+  }
+})
+
 //model1-> listing (model) apply shcema
 const Listing = mongoose.model("Listing",listingSchema);
 //export the model

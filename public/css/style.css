@@ -89,7 +89,7 @@ img {
     top: 0;
     z-index: 1030;
     backdrop-filter: blur(18px);
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.7);
     border-bottom: 1px solid var(--line);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -101,9 +101,9 @@ img {
     width: 100%;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.15);
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.08);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .site-body:has(.home-hero) .site-navbar .site-brand {
@@ -350,7 +350,7 @@ img {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.32), rgba(20, 15, 10, 0.45));
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(20, 15, 10, 0.25));
 }
 
 .home-hero__content {
@@ -374,7 +374,7 @@ img {
 }
 
 .home-hero__content h1 {
-    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
     color: #ffffff;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     margin-bottom: 1.2rem;
@@ -382,10 +382,10 @@ img {
 
 .home-hero__content p {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     line-height: 1.7;
     max-width: 56rem;
-    /* margin: 0 auto; */
+    margin: 0 auto;
     font-weight: 600;
 }
 

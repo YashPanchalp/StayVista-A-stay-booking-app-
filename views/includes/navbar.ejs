@@ -9,15 +9,15 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto site-nav-group">
-        <a class="nav-link site-nav-link active" aria-current="page" href="/">
+        <a class="nav-link site-nav-link <%= currentPath === '/' ? 'active' : '' %>" aria-current="page" href="/">
           <i class="bi bi-house-door"></i>
           Home
         </a>
-        <a class="nav-link site-nav-link" href="/listings">
+        <a class="nav-link site-nav-link <%= (currentPath.startsWith('/listings') && currentPath !== '/listings/new') ? 'active' : '' %>" href="/listings">
           <i class="bi bi-grid-3x3-gap"></i>
           All Listings
         </a>
-        <a class="nav-link site-nav-link" href="/listings/new">
+        <a class="nav-link site-nav-link <%= currentPath === '/listings/new' ? 'active' : '' %>" href="/listings/new">
           <i class="bi bi-plus-circle"></i>
           Add Listing
         </a>
