@@ -48,6 +48,60 @@ body.site-body::before {
     width: 100%;
 }
 
+.app-toast {
+    min-width: 22rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(24, 28, 31, 0.98), rgba(34, 40, 44, 0.96)) !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(10px);
+}
+
+.app-toast--success {
+    position: relative;
+    border: 1px solid rgba(110, 200, 158, 0.25) !important;
+}
+
+.app-toast--success::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0.35rem;
+    background: linear-gradient(180deg, #72d6a4, #45b07b);
+}
+
+.app-toast--error {
+    position: relative;
+    border: 1px solid rgba(231, 76, 60, 0.3) !important;
+}
+
+.app-toast--error::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0.35rem;
+    background: linear-gradient(180deg, #f27f74, #e74c3c);
+}
+
+.app-toast .toast-body {
+    padding: 0.95rem 1rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #f5f7f8;
+}
+
+.app-toast--error .toast-body {
+    color: #fff2f1;
+}
+
+.app-toast .btn-close-white {
+    opacity: 0.9;
+}
+
+.app-toast .btn-close-white:hover {
+    opacity: 1;
+}
+
 section.listing-page,
 section.form-page,
 section.detail-page {

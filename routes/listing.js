@@ -8,6 +8,11 @@ const { listingSchema } = require("../schema.js")
 const Listing = require("../models/listing.js")
 //----------------------------------
 
+const flashListingNotFound = (req, res) => {
+  req.flash("error", "Listing requested is not found.");
+  res.redirect("/listings");
+};
+
 //--------validation method---------
 //Joi -> shcema validation middleware
 const validateListing = (req,res,next)=> {
@@ -42,6 +47,10 @@ router.get("/:id" ,
   //get the id of the data from req and then search all items for it
   let {id} = req.params;
   const listing = await Listing.findById(id).populate("reviews");
+  if(!listing) {
+    return flashListingNotFound(req, res);
+  }
+  
   res.render("listings/show" , {listing});
 }));
 
@@ -53,6 +62,8 @@ router.post("/" ,
   //create new listing 
   const newListing = new Listing(req.body.listing);
   await newListing.save();
+  //flash message
+  req.flash("success","New Stay Added sucessfully!")
   res.redirect("/listings");
 //   {
 //   listing: {
@@ -72,7 +83,9 @@ router.get("/:id/edit" ,
   //get the id and load the listing
   let {id} = req.params;
   const listing = await Listing.findById(id);
-
+  if(!listing) {
+    return flashListingNotFound(req, res);
+  }
   res.render("listings/edit" , {listing});
 
 }));
@@ -83,6 +96,8 @@ router.put("/:id",
   let {id} = req.params;
   //from this id we can find and update values from :: listing object of req body
   await Listing.findByIdAndUpdate(id , {...req.body.listing});
+  //flash message
+  req.flash("success", "The Stay details updated!")
   res.redirect(`/listings/${id}`);
 }));
 
@@ -92,6 +107,8 @@ router.delete("/:id" ,
   let {id} = req.params;
   let deletedListing = await Listing.findByIdAndDelete(id);
   console.log(deletedListing);
+  //falsh message
+  req.flash("success","Stay has been deleted!")
   res.redirect("/listings");
 }));
 

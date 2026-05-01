@@ -20,11 +20,23 @@
 
   // Toast Notification Logic
   document.addEventListener("DOMContentLoaded", () => {
+    const flashToasts = document.querySelectorAll(".app-toast");
+    if (typeof bootstrap !== "undefined") {
+      flashToasts.forEach((toastEl) => {
+        const toast = bootstrap.Toast.getOrCreateInstance(toastEl, {
+          autohide: true,
+          delay: 5000,
+        });
+
+        toast.show();
+      });
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     if(urlParams.get('success') === 'true') {
         const toastHTML = `
         <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
-            <div id="liveToast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div id="liveToast" class="toast align-items-center text-bg-dark border-0 app-toast app-toast--success" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
                 <div class="d-flex">
                     <div class="toast-body">
                         <i class="bi bi-check-circle-fill text-success me-2"></i> Review Added Successfully!
@@ -38,7 +50,10 @@
         const toastEl = document.getElementById('liveToast');
         // Ensure bootstrap is loaded before calling Toast
         if (typeof bootstrap !== 'undefined') {
-            const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+            const toast = bootstrap.Toast.getOrCreateInstance(toastEl, {
+              autohide: true,
+              delay: 5000,
+            });
             toast.show();
         }
 
@@ -46,4 +61,5 @@
         const newUrl = window.location.pathname;
         window.history.replaceState({}, document.title, newUrl);
     }
+
   });

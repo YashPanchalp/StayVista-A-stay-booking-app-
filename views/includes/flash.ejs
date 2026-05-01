@@ -1,0 +1,26 @@
+<% const successMessages = typeof success !== "undefined" ? (Array.isArray(success) ? success : [success]) : []; %>
+<% const errorMessages = typeof error !== "undefined" ? (Array.isArray(error) ? error : [error]) : []; %>
+<% if(successMessages.length || errorMessages.length) { %>
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+	<% successMessages.forEach((message) => { %>
+		<div class="toast align-items-center text-bg-dark border-0 show app-toast app-toast--success" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+			<div class="d-flex">
+				<div class="toast-body">
+					<i class="bi bi-check-circle-fill text-success me-2"></i> <%= message %>
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+		</div>
+	<% }) %>
+	<% errorMessages.forEach((message) => { %>
+		<div class="toast align-items-center text-bg-dark border-0 show app-toast app-toast--error" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+			<div class="d-flex">
+				<div class="toast-body">
+					<i class="bi bi-x-circle-fill text-danger me-2"></i> <%= message %>
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+		</div>
+	<% }) %>
+</div>
+<% } %>
