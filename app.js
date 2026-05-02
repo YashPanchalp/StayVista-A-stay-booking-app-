@@ -44,7 +44,7 @@ app.use(flash());
 
 //configure passport strategy for info stored in session and same for the added user
 app.use(passport.initialize());
-passport.session(); //each time in same browser no need to login
+app.use(passport.session()); //each time in same browser no need to login
 passport.use(new LocalStrategy(User.authenticate()));
 //save info into session or remove
 passport.serializeUser(User.serializeUser());
@@ -54,6 +54,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.currentUser = req.user;
   next();
 });
 //--------------------------------------

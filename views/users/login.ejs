@@ -1,22 +1,42 @@
 <%- layout("/layouts/boilerplate") %>
 
-<div>
-    <form action="/login" method="POST">
+<section class="form-page auth-page container py-5">
+    <div class="form-page__intro auth-page__intro">
+        <div>
+            <span class="eyebrow eyebrow--light"><i class="bi bi-box-arrow-in-right"></i> Member access</span>
+            <h1>Login to StayVista</h1>
+            <p>Pick up where you left off and manage your listings, bookings, and reviews.</p>
+        </div>
+    </div>
 
-        <h1>Login on StayVista</h1>
-        <label for="username">UserName: </label><input
-        name = "username"
-        id = "username"
-        type = 'text'
-        required>
+    <div class="auth-card form-shell">
+        <form action="/login" method="POST" class="listing-form auth-form">
+            <div class="form-grid auth-form__grid">
+                <label class="field field--wide" for="username">
+                    <span>Username</span>
+                    <input
+                        name="username"
+                        id="username"
+                        type="text"
+                        placeholder="Enter your username"
+                        required>
+                </label>
 
-        <label for="">Password: </label><input
-        name = "password"
-        id = "password"
-        type = 'password'
-        required>
+                <label class="field field--wide" for="password">
+                    <span>Password</span>
+                    <input
+                        name="password"
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        required>
+                </label>
+            </div>
 
-        <button>Login</button>
-
-    </form>
-</div>
+            <div class="form-actions auth-form__actions">
+                <a href="/listings" class="btn btn-outline-secondary">Browse listings</a>
+                <button class="btn btn-dark auth-submit">Login</button>
+            </div>
+        </form>
+    </div>
+</section>

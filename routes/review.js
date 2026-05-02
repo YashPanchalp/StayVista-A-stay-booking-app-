@@ -8,6 +8,7 @@ const { listingSchema } = require("../schema.js")
 const { reviewSchema } = require("../schema.js");
 const Review = require("../models/review.js");
 const Listing = require("../models/listing.js")
+const {isLoggedIn} = require("../middleware.js")
 
 //------------------------------
 
@@ -27,6 +28,7 @@ const validateReview = (req,res,next)=> {
 //-------all routes with "listings/:id/reviews"---------
 //(8) Reviews -> Post route
 router.post("/" , 
+  isLoggedIn,
   validateReview,
   asyncWarp ( async(req,res) => {
   let listing = await Listing.findById(req.params.id);
@@ -35,11 +37,14 @@ router.post("/" ,
 
   await newReview.save();
   await listing.save();
-  res.redirect(`/listings/${listing._id}?success=true`);
+  
+  req.flash("success", "Thank you! Your review has been added.");
+  res.redirect(`/listings/${listing._id}`);
 }));
 
 //(9) Delete Review -> by segrigate the id
 router.delete("/:reviewId" ,
+  isLoggedIn,
   asyncWarp ( async(req,res) => {
     let { id , reviewId} = req.params;
 
@@ -48,7 +53,7 @@ router.delete("/:reviewId" ,
     await Listing.findByIdAndUpdate(id, {$pull : { reviews:reviewId }});
     await Review.findByIdAndDelete(reviewId);
 
-    req.flash("success", "Review deleted successfully!");
+    req.flash("success", "Your review has been successfully removed.");
 
     res.redirect(`/listings/${id}`);
   })

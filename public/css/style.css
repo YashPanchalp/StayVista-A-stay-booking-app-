@@ -49,7 +49,8 @@ body.site-body::before {
 }
 
 .app-toast {
-    min-width: 22rem;
+    min-width: 26rem;
+    max-width: min(38rem, calc(100vw - 1.5rem));
     border-radius: 1rem;
     overflow: hidden;
     background: linear-gradient(135deg, rgba(24, 28, 31, 0.98), rgba(34, 40, 44, 0.96)) !important;
@@ -68,6 +69,66 @@ body.site-body::before {
     inset: 0 auto 0 0;
     width: 0.35rem;
     background: linear-gradient(180deg, #72d6a4, #45b07b);
+}
+
+.app-toast__inner {
+    position: relative;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem 1.25rem 1.25rem;
+}
+
+.app-toast__icon {
+    flex: 0 0 auto;
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    margin-top: 0.05rem;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.app-toast__icon--success {
+    color: #8ce0b5;
+    background: rgba(110, 200, 158, 0.12);
+}
+
+.app-toast__icon--error {
+    color: #ff8f86;
+    background: rgba(231, 76, 60, 0.12);
+}
+
+.app-toast__content {
+    flex: 1;
+    min-width: 0;
+    padding-right: 0.25rem;
+}
+
+.app-toast__eyebrow {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.app-toast__message {
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.45;
+    color: #f5f7f8;
+    word-break: break-word;
+}
+
+.app-toast__close {
+    flex: 0 0 auto;
+    margin-top: 0.2rem;
 }
 
 .app-toast--error {
@@ -94,12 +155,72 @@ body.site-body::before {
     color: #fff2f1;
 }
 
+.app-toast--error .app-toast__eyebrow {
+    color: rgba(255, 210, 206, 0.78);
+}
+
 .app-toast .btn-close-white {
     opacity: 0.9;
 }
 
 .app-toast .btn-close-white:hover {
     opacity: 1;
+}
+
+.auth-page {
+    width: min(100%, 920px);
+    padding-top: 2.25rem;
+    padding-bottom: 3.5rem;
+}
+
+.auth-page__intro {
+    margin-bottom: 1.25rem;
+}
+
+.auth-card {
+    position: relative;
+    border-radius: 32px;
+    border: 1px solid rgba(196, 149, 106, 0.14);
+    background:
+        radial-gradient(circle at top right, rgba(196, 149, 106, 0.09), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(196, 149, 106, 0.06), transparent 24%),
+        rgba(255, 255, 255, 0.95);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.auth-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0.4rem;
+    background: linear-gradient(180deg, var(--accent-strong), var(--accent));
+}
+
+.auth-form {
+    padding: 1.75rem;
+}
+
+.auth-form__grid {
+    gap: 1.1rem;
+}
+
+.auth-form .field span {
+    color: var(--muted);
+}
+
+.auth-form .field input {
+    background: rgba(255, 255, 255, 0.82);
+}
+
+.auth-form__actions {
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.auth-form__actions .btn {
+    min-width: 11rem;
 }
 
 section.listing-page,
@@ -957,6 +1078,15 @@ img {
         padding-inline: 0.25rem;
     }
 
+    .auth-page {
+        width: 100%;
+        padding-top: 1.5rem;
+    }
+
+    .auth-form {
+        padding: 1.25rem;
+    }
+
     .listing-form,
     .detail-panel {
         padding: 1.25rem;
@@ -1008,6 +1138,25 @@ img {
     .home-hero__stats div {
         padding: 0.85rem 0.95rem;
         font-size: 0.9rem;
+    }
+
+    .app-toast {
+        min-width: 0;
+        width: min(100%, calc(100vw - 1rem));
+    }
+
+    .app-toast__inner {
+        padding: 0.95rem 1rem 0.95rem 0.9rem;
+        gap: 0.8rem;
+    }
+
+    .auth-form__actions {
+        flex-direction: column;
+    }
+
+    .auth-form__actions .btn {
+        width: 100%;
+        min-width: 0;
     }
     
     .home-hero__stats strong {

@@ -1,28 +1,52 @@
 <%- layout("/layouts/boilerplate") %>
 
-<div>
-    <form action="/signup" method="POST">
+<section class="form-page auth-page container py-5">
+    <div class="form-page__intro auth-page__intro">
+        <div>
+            <span class="eyebrow eyebrow--light"><i class="bi bi-person-plus-fill"></i> Create account</span>
+            <h1>Sign up for StayVista</h1>
+            <p>Create your account to save favorites, leave reviews, and start hosting.</p>
+        </div>
+    </div>
 
-        <h1>Signup on StayVista</h1>
-        <label for="username">UserName: </label><input
-        name = "username"
-        id = "username"
-        type = 'text'
-        required>
+    <div class="auth-card form-shell">
+        <form action="/signup" method="POST" class="listing-form auth-form">
+            <div class="form-grid auth-form__grid">
+                <label class="field field--wide" for="username">
+                    <span>Username</span>
+                    <input
+                        name="username"
+                        id="username"
+                        type="text"
+                        placeholder="Choose a username"
+                        required>
+                </label>
 
-        <label for="">Email: </label><input
-        name = "email"
-        id = "email"
-        type = 'email'
-        required>
+                <label class="field field--wide" for="email">
+                    <span>Email</span>
+                    <input
+                        name="email"
+                        id="email"
+                        type="email"
+                        placeholder="Enter your email address"
+                        required>
+                </label>
 
-        <label for="">Password: </label><input
-        name = "password"
-        id = "password"
-        type = 'password'
-        required>
+                <label class="field field--wide" for="password">
+                    <span>Password</span>
+                    <input
+                        name="password"
+                        id="password"
+                        type="password"
+                        placeholder="Create a password"
+                        required>
+                </label>
+            </div>
 
-        <button>Sign Up</button>
-
-    </form>
-</div>
+            <div class="form-actions auth-form__actions">
+                <a href="/login" class="btn btn-outline-secondary">Already have an account?</a>
+                <button class="btn btn-dark auth-submit">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</section>

@@ -6,10 +6,11 @@ const ExpressError = require("../utils/ExpressError.js");
 const asyncWarp = require("../utils/asyncWrap().js");
 const { listingSchema } = require("../schema.js")
 const Listing = require("../models/listing.js")
+const {isLoggedIn} = require("../middleware.js" )
 //----------------------------------
 
 const flashListingNotFound = (req, res) => {
-  req.flash("error", "Listing requested is not found.");
+  req.flash("error", "We couldn't find the requested listing.");
   res.redirect("/listings");
 };
 
@@ -37,7 +38,9 @@ router.get("/" ,
 
 //written before bec "new" can consider as :id from second route
 //(3)new listing - new and create routes
-router.get("/new" , (req,res) => {
+router.get("/new" , 
+  isLoggedIn,
+  (req,res) => {
   res.render("listings/new")
 })
 
@@ -57,13 +60,14 @@ router.get("/:id" ,
 //(4)Create - new listing save and add
 router.post("/" ,
   validateListing,
+  isLoggedIn,
   asyncWarp(async (req,res) => {
   //from name acess them from req body -> where names are as object listing.value
   //create new listing 
   const newListing = new Listing(req.body.listing);
   await newListing.save();
   //flash message
-  req.flash("success","New Stay Added sucessfully!")
+  req.flash("success", "Your new StayVista listing has been published successfully.");
   res.redirect("/listings");
 //   {
 //   listing: {
@@ -79,6 +83,7 @@ router.post("/" ,
 
 ///(5)Edit Route - To edit Listings
 router.get("/:id/edit" , 
+  isLoggedIn,
   asyncWarp ( async (req,res) => {
   //get the id and load the listing
   let {id} = req.params;
@@ -92,23 +97,25 @@ router.get("/:id/edit" ,
 
 //(6)Update Route - To update value in db and show
 router.put("/:id", 
+  isLoggedIn,
   asyncWarp (async (req,res) => {
   let {id} = req.params;
   //from this id we can find and update values from :: listing object of req body
   await Listing.findByIdAndUpdate(id , {...req.body.listing});
   //flash message
-  req.flash("success", "The Stay details updated!")
+  req.flash("success", "Your listing details have been updated successfully.");
   res.redirect(`/listings/${id}`);
 }));
 
 //(7) Delete route - Delete Listing
 router.delete("/:id" , 
+  isLoggedIn,
   asyncWarp ( async (req,res) => {
   let {id} = req.params;
   let deletedListing = await Listing.findByIdAndDelete(id);
   console.log(deletedListing);
   //falsh message
-  req.flash("success","Stay has been deleted!")
+  req.flash("success", "Your listing has been permanently removed.");
   res.redirect("/listings");
 }));
 
