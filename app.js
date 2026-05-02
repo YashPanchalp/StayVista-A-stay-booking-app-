@@ -11,6 +11,10 @@ const asyncWarp = require("./utils/asyncWrap().js");
 const { throws } = require("node:assert");
 const session = require("express-session");
 const flash = require("connect-flash");
+const User = require("./models/user.js");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+
 //----------------------------------------------------------
 
 //----------------path set and ejs------------
@@ -37,6 +41,15 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash());
+
+//configure passport strategy for info stored in session and same for the added user
+app.use(passport.initialize());
+passport.session(); //each time in same browser no need to login
+passport.use(new LocalStrategy(User.authenticate()));
+//save info into session or remove
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -69,13 +82,30 @@ app.get("/" , (req, res) => {
 });
 
 
+// //demo User
+// app.get("/demouser", async (req,res) => {
+//   let fakeUser = new User({
+//     email : "student@gmail.com",
+//     username : "delta-student",
+//   })
+
+//   //register() => static method that auto initialize unique usernames to store in db and takes username , info and callback
+//   let registeredUser = await User.register(fakeUser,"hellowworld");
+//   res.send(registeredUser);
+// })
+
+
 //All the Listing Routes-----------
-const listings = require("./routes/listing.js");
-app.use("/listings" , listings);
+const listingRouter = require("./routes/listing.js");
+app.use("/listings" , listingRouter);
 
 //All Review Routes-----------------
-const reviews = require("./routes/review.js");
-app.use("/listings/:id/reviews" , reviews);
+const reviewRouter = require("./routes/review.js");
+app.use("/listings/:id/reviews" , reviewRouter);
+
+//All Sign in / up Routes ------------
+const userRouter = require("./routes/user.js");
+app.use("/", userRouter);
 
 
 //not found page route
