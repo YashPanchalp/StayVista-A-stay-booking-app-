@@ -2,31 +2,16 @@ const express = require("express");
 const router = express.Router();
 
 //------------all requirement -----
-const ExpressError = require("../utils/ExpressError.js");
 const asyncWarp = require("../utils/asyncWrap().js");
 const { listingSchema } = require("../schema.js")
 const Listing = require("../models/listing.js")
-const {isLoggedIn} = require("../middleware.js" )
+const {isLoggedIn , isOwner , validateListing} = require("../middleware.js" )
 //----------------------------------
 
 const flashListingNotFound = (req, res) => {
   req.flash("error", "We couldn't find the requested listing.");
   res.redirect("/listings");
 };
-
-//--------validation method---------
-//Joi -> shcema validation middleware
-const validateListing = (req,res,next)=> {
-  let {error} = listingSchema.validate(req.body);
-
-  if(error){
-    let errMsg = error.details.map( (ele) => ele.message).join(",");
-    throw new ExpressError(400,errMsg);
-  } else{
-    next();
-  }
-}
-
 
 //-------all routers with value "/listings"------
 //(1)index -listing routes
@@ -49,11 +34,14 @@ router.get("/:id" ,
   asyncWarp(async (req,res) => {
   //get the id of the data from req and then search all items for it
   let {id} = req.params;
-  const listing = await Listing.findById(id).populate("reviews");
+  //from objectId of reviews and owner get all details using populate
+  const listing = await Listing.findById(id)
+                                .populate({path :"reviews",
+                                           populate : "author"}) //nested populate to get author
+                                .populate("owner");
   if(!listing) {
     return flashListingNotFound(req, res);
   }
-  
   res.render("listings/show" , {listing});
 }));
 
@@ -65,6 +53,7 @@ router.post("/" ,
   //from name acess them from req body -> where names are as object listing.value
   //create new listing 
   const newListing = new Listing(req.body.listing);
+  newListing.owner = req.user._id; //assign the owner's id to listing
   await newListing.save();
   //flash message
   req.flash("success", "Your new StayVista listing has been published successfully.");
@@ -84,6 +73,7 @@ router.post("/" ,
 ///(5)Edit Route - To edit Listings
 router.get("/:id/edit" , 
   isLoggedIn,
+  isOwner,
   asyncWarp ( async (req,res) => {
   //get the id and load the listing
   let {id} = req.params;
@@ -98,8 +88,10 @@ router.get("/:id/edit" ,
 //(6)Update Route - To update value in db and show
 router.put("/:id", 
   isLoggedIn,
+  isOwner,
   asyncWarp (async (req,res) => {
   let {id} = req.params;
+  
   //from this id we can find and update values from :: listing object of req body
   await Listing.findByIdAndUpdate(id , {...req.body.listing});
   //flash message
@@ -110,6 +102,7 @@ router.put("/:id",
 //(7) Delete route - Delete Listing
 router.delete("/:id" , 
   isLoggedIn,
+  isOwner,
   asyncWarp ( async (req,res) => {
   let {id} = req.params;
   let deletedListing = await Listing.findByIdAndDelete(id);

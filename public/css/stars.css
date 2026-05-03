@@ -2,8 +2,12 @@
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
-    gap: 0.25rem;
-    margin-bottom: 1rem;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid var(--line, #eaeaea);
 }
 
 .star-rating input[type="radio"] {
@@ -12,9 +16,9 @@
 
 .star-rating label {
     cursor: pointer;
-    font-size: 1.5rem;
-    color: #ffd700;
-    transition: color 0.2s ease-in-out;
+    font-size: 2rem;
+    color: #ffc107;
+    transition: transform 0.2s ease, color 0.2s ease;
 }
 
 /* Base state - Outline star */
@@ -27,4 +31,10 @@
 .star-rating label:hover ~ label i::before,
 .star-rating label:hover i::before {
     content: "\F586"; /* bi-star-fill */
+}
+
+/* Add a slight pop effect on hover */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    transform: scale(1.15);
 }

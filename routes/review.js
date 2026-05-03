@@ -8,22 +8,8 @@ const { listingSchema } = require("../schema.js")
 const { reviewSchema } = require("../schema.js");
 const Review = require("../models/review.js");
 const Listing = require("../models/listing.js")
-const {isLoggedIn} = require("../middleware.js")
-
-//------------------------------
-
-//------------validation mathod --------
-const validateReview = (req,res,next)=> {
-  let {error} = reviewSchema.validate(req.body);
-
-  if(error){
-    let errMsg = error.details.map( (ele) => ele.message).join(",");
-    throw new ExpressError(400,errMsg);
-  } else{
-    next();
-  }
-}
-//--------------------------------------
+const {isLoggedIn , isReviewAuthor} = require("../middleware.js")
+const {validateReview} = require("../middleware.js");
 
 //-------all routes with "listings/:id/reviews"---------
 //(8) Reviews -> Post route
@@ -33,6 +19,7 @@ router.post("/" ,
   asyncWarp ( async(req,res) => {
   let listing = await Listing.findById(req.params.id);
   let newReview = new Review(req.body.review);
+  newReview.author = req.user._id; //add the author info
   listing.reviews.push(newReview);
 
   await newReview.save();
@@ -45,6 +32,7 @@ router.post("/" ,
 //(9) Delete Review -> by segrigate the id
 router.delete("/:reviewId" ,
   isLoggedIn,
+  isReviewAuthor,
   asyncWarp ( async(req,res) => {
     let { id , reviewId} = req.params;
 

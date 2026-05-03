@@ -20,6 +20,7 @@
 
 html {
     scroll-behavior: smooth;
+    font-size: 85%; /* Reduce sizing of rem-based bootstrap and custom components */
 }
 
 body.site-body {
@@ -763,7 +764,7 @@ img {
 
 .listing-card__body h2 {
     margin: 0;
-    font-size: 1.22rem;
+    font-size: 1.45rem;
     line-height: 1.3;
     font-family: "Cormorant Garamond", serif;
     font-weight: 700;
@@ -775,7 +776,7 @@ img {
 .listing-card__body p {
     margin: 0.4rem 0 0;
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: 1.1rem;
 }
 
 .listing-card__footer {
@@ -786,7 +787,7 @@ img {
 }
 
 .listing-card__price {
-    font-size: 1.08rem;
+    font-size: 1.2rem;
     font-weight: 800;
     color: var(--accent-strong);
 }
@@ -914,7 +915,8 @@ img {
 .detail-media img {
     width: 100%;
     height: 100%;
-    min-height: 560px;
+    min-height: 520px;
+    max-height: 75vh;
     object-fit: cover;
 }
 

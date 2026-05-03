@@ -1,13 +1,14 @@
 <%- layout("/layouts/boilerplate") %>
 
-<section class="detail-page container py-5">
-    <div class="detail-layout">
+<section class="detail-page container-fluid px-4 px-xl-5 py-4">
+    <div class="col-12 px-md-4">
+        <div class="detail-layout">
         <div class="detail-media">
             <img src="<%= listing.image && listing.image.url ? listing.image.url : '' %>" alt="<%= listing.title %>">
         </div>
 
         <div class="detail-panel">
-            <span class="eyebrow"><i class="bi bi-award"></i> Featured stay</span>
+            <span class="eyebrow"><i class="bi bi-award"></i> Featured stay (Owned By : <%= listing.owner[0].username %>)</span>
             <h1><%= listing.title %></h1>
             <p class="detail-panel__description"><%= listing.description %></p>
 
@@ -24,6 +25,9 @@
                 </div>
             </div>
 
+            <!-- if any currentUser logged in and he is owner  -->
+
+            <% if(currentUser && listing.owner[0]._id.equals(currentUser._id)) {%>
             <div class="detail-actions">
                 <a href="/listings/<%= listing._id %>/edit" class="btn btn-accent">
                     <i class="bi bi-pencil-square"></i>
@@ -36,20 +40,26 @@
                     </button>
                 </form>
             </div>
+            <% } %>
         </div>
     </div>
+    </div> <!-- Close wide container wrapper -->
 
     <!-- Review Section -->
     <div class="reviews-section mt-5 pt-4 border-top">
         <div class="row">
             <div class="col-md-8 offset-md-2">
+                
+                <!-- if user us logged in then only show -->
+                <% if(currentUser) { %>
+
                 <h4 class="mb-4">Leave a Review</h4>
                 <div class="card p-4 shadow-sm border-0 bg-white rounded-4 mb-5">
                     <form action="/listings/<%= listing._id %>/reviews" method="POST" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Rating</label>
                             <div class="star-rating d-inline-flex">
-                                <input type="radio" id="star5" name="review[rating]" value="5" />
+                                <input type="radio" id="star5" name="review[rating]" value="5" checked />
                                 <label for="star5" title="5 stars"><i class="bi bi-star-fill"></i></label>
                                 <input type="radio" id="star4" name="review[rating]" value="4" />
                                 <label for="star4" title="4 stars"><i class="bi bi-star-fill"></i></label>
@@ -57,7 +67,7 @@
                                 <label for="star3" title="3 stars"><i class="bi bi-star-fill"></i></label>
                                 <input type="radio" id="star2" name="review[rating]" value="2" />
                                 <label for="star2" title="2 stars"><i class="bi bi-star-fill"></i></label>
-                                <input type="radio" id="star1" name="review[rating]" value="1" checked />
+                                <input type="radio" id="star1" name="review[rating]" value="1" />
                                 <label for="star1" title="1 star"><i class="bi bi-star-fill"></i></label>
                             </div>
                         </div>
@@ -72,6 +82,7 @@
                         <button class="btn btn-dark w-100 py-2 fw-semibold rounded-3">Submit Review</button>  
                     </form>
                 </div>
+                <% } %>
 
                 <% if (listing.reviews && listing.reviews.length > 0) { %>
                     <hr class="my-5" />
@@ -81,7 +92,7 @@
                             <div class="col">
                                 <div class="card p-4 shadow-sm border-0 h-100 rounded-4">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h6 class="mb-0 fw-bold">Guest User</h6>
+                                        <h6 class="mb-0 fw-bold">@<%= review.author.username %></h6>
                                         <div class="text-warning">
                                             <% for(let i=1; i<=5; i++) { %>
                                                 <% if(i <= review.rating) { %>
@@ -94,9 +105,13 @@
                                     </div>
                                     <p class="card-text text-muted mb-0 small"><%= review.comment %></p>
                                     <br>
+
+                                    <!-- only show delete option to the author of Review -->
+                                    <% if(currentUser && review.author._id.equals(currentUser._id)){ %>
                                     <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
                                         <button>Delete</button>
                                     </form>
+                                    <% } %>
                                 </div>
                             </div>
                         <% } %>
