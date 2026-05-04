@@ -10,7 +10,7 @@
     </div>
 
     <div class="form-shell">
-        <form method="post" action="/listings" class="listing-form needs-validation" novalidate>
+        <form method="post" action="/listings" class="listing-form needs-validation" novalidate enctype="multipart/form-data">
             <div class="form-grid">
                 <label class="field">
                     <span>Title</span>
@@ -25,10 +25,17 @@
                 </label>
 
                 <label class="field field--wide">
-                    <span>Image URL</span>
-                    <input name="listing[image][url]" class="form-control" placeholder="Paste a high-quality image URL" type="text" required>
-                    <div class="invalid-feedback">A valid image URL is required</div>
+                    <span>Photo</span>
+                    <input name="image" class="form-control" type="file" accept="image/*" required>
+                    <small class="form-text text-muted">Upload a high-quality image (JPEG, PNG, WebP, etc.)</small>
+                    <div class="invalid-feedback">Please upload an image</div>
                     <div class="valid-feedback">Looks good!</div>
+                </label>
+
+                <label class="field field--wide">
+                    <span>Gallery Images</span>
+                    <input name="gallery" class="form-control" type="file" accept="image/*" multiple>
+                    <small class="form-text text-muted">Upload up to 10 images for the gallery (optional)</small>
                 </label>
 
                 <label class="field">

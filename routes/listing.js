@@ -6,110 +6,43 @@ const asyncWarp = require("../utils/asyncWrap().js");
 const { listingSchema } = require("../schema.js")
 const Listing = require("../models/listing.js")
 const {isLoggedIn , isOwner , validateListing} = require("../middleware.js" )
+const listingController = require("../controller/listing.js")
+const { multipleFields } = require("../utils/upload.js")
 //----------------------------------
-
-const flashListingNotFound = (req, res) => {
-  req.flash("error", "We couldn't find the requested listing.");
-  res.redirect("/listings");
-};
 
 //-------all routers with value "/listings"------
 //(1)index -listing routes
-router.get("/" , 
-  asyncWarp(async (req,res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index",{allListings})
-}));
+router.get("/" , asyncWarp(listingController.index));
 
 //written before bec "new" can consider as :id from second route
 //(3)new listing - new and create routes
-router.get("/new" , 
-  isLoggedIn,
-  (req,res) => {
-  res.render("listings/new")
-})
+router.get("/new" , isLoggedIn, listingController.renderNewForm)
 
 //(2)show - read all data from title 
-router.get("/:id" , 
-  asyncWarp(async (req,res) => {
-  //get the id of the data from req and then search all items for it
-  let {id} = req.params;
-  //from objectId of reviews and owner get all details using populate
-  const listing = await Listing.findById(id)
-                                .populate({path :"reviews",
-                                           populate : "author"}) //nested populate to get author
-                                .populate("owner");
-  if(!listing) {
-    return flashListingNotFound(req, res);
-  }
-  res.render("listings/show" , {listing});
-}));
+router.get("/:id" , asyncWarp(listingController.showListing));
 
 //(4)Create - new listing save and add
-router.post("/" ,
-  validateListing,
-  isLoggedIn,
-  asyncWarp(async (req,res) => {
-  //from name acess them from req body -> where names are as object listing.value
-  //create new listing 
-  const newListing = new Listing(req.body.listing);
-  newListing.owner = req.user._id; //assign the owner's id to listing
-  await newListing.save();
-  //flash message
-  req.flash("success", "Your new StayVista listing has been published successfully.");
-  res.redirect("/listings");
-//   {
-//   listing: {
-//     title: 'taj goa',
-//     description: 'sea side property',
-//     image: 'taj-goa.jpeg',
-//     price: '16000',
-//     country: 'India',
-//     location: 'Goa'
-//   }
-// }
-}));
+router.post("/" , isLoggedIn, multipleFields, validateListing, asyncWarp(listingController.createListing));
 
 ///(5)Edit Route - To edit Listings
-router.get("/:id/edit" , 
-  isLoggedIn,
-  isOwner,
-  asyncWarp ( async (req,res) => {
-  //get the id and load the listing
-  let {id} = req.params;
-  const listing = await Listing.findById(id);
-  if(!listing) {
-    return flashListingNotFound(req, res);
-  }
-  res.render("listings/edit" , {listing});
+router.get("/:id/edit" ,isLoggedIn, isOwner, asyncWarp (listingController.renderEditFrom));
 
-}));
+//(5.5) Upload Images Route - To upload HD images for a listing
+router.get("/:id/upload-images", isLoggedIn, isOwner, asyncWarp(listingController.renderUploadImagesForm));
 
 //(6)Update Route - To update value in db and show
-router.put("/:id", 
-  isLoggedIn,
-  isOwner,
-  asyncWarp (async (req,res) => {
-  let {id} = req.params;
-  
-  //from this id we can find and update values from :: listing object of req body
-  await Listing.findByIdAndUpdate(id , {...req.body.listing});
-  //flash message
-  req.flash("success", "Your listing details have been updated successfully.");
-  res.redirect(`/listings/${id}`);
-}));
+router.put("/:id", isLoggedIn, isOwner, multipleFields, asyncWarp (listingController.updateListing));
+
+//(6.5) Upload Images POST - To save uploaded images
+router.post("/:id/upload-images", isLoggedIn, isOwner, multipleFields, asyncWarp(listingController.uploadListingImages));
 
 //(7) Delete route - Delete Listing
-router.delete("/:id" , 
-  isLoggedIn,
-  isOwner,
-  asyncWarp ( async (req,res) => {
-  let {id} = req.params;
-  let deletedListing = await Listing.findByIdAndDelete(id);
-  console.log(deletedListing);
-  //falsh message
-  req.flash("success", "Your listing has been permanently removed.");
-  res.redirect("/listings");
-}));
+router.delete("/:id" , isLoggedIn, isOwner, asyncWarp (listingController.deleteListing));
+
+//(8) Delete main image - Remove main image from listing
+router.delete("/:id/delete-main-image", isLoggedIn, isOwner, asyncWarp(listingController.deleteMainImage));
+
+//(9) Delete gallery image - Remove specific gallery image from listing
+router.delete("/:id/delete-gallery-image/:index", isLoggedIn, isOwner, asyncWarp(listingController.deleteGalleryImage));
 
 module.exports = router;

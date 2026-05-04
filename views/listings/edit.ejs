@@ -10,7 +10,7 @@
     </div>
 
     <div class="form-shell">
-        <form method="post" action="/listings/<%= listing._id %>?_method=PUT" class="listing-form needs-validation" novalidate>
+        <form method="post" action="/listings/<%= listing._id %>?_method=PUT" class="listing-form needs-validation" novalidate enctype="multipart/form-data">
             <div class="form-grid">
                 <label class="field">
                     <span>Title</span>
@@ -25,10 +25,34 @@
                 </label>
 
                 <label class="field field--wide">
-                    <span>Image URL</span>
-                    <input name="listing[image][url]" class="form-control" value="<%= listing.image && listing.image.url ? listing.image.url : '' %>" type="text" required>
-                    <div class="invalid-feedback">A valid image URL is required</div>
-                    <div class="valid-feedback">Looks good!</div>
+                    <span>Photo</span>
+                    <% if(listing.image && listing.image.url) { %>
+                    <div class="mb-3">
+                        <img src="<%= listing.image.url %>" alt="<%= listing.title %>" style="max-width: 200px; max-height: 150px; border-radius: 4px;">
+                        <p class="small mt-2">Current photo</p>
+                    </div>
+                    <% } %>
+                    <input name="image" class="form-control" type="file" accept="image/*">
+                    <small class="form-text text-muted">Upload a new image to replace the current one (optional)</small>
+                </label>
+
+                <label class="field field--wide">
+                    <span>Gallery Images</span>
+                    <% if(listing.gallery && listing.gallery.length > 0) { %>
+                    <div class="mb-3">
+                        <p class="small mb-2"><strong>Current Gallery:</strong></p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
+                            <% listing.gallery.forEach((img, idx) => { %>
+                            <div style="position: relative; border-radius: 4px; overflow: hidden;">
+                                <img src="<%= img.url %>" alt="Gallery image <%= idx + 1 %>" style="width: 100%; height: 100px; object-fit: cover; display: block;">
+                                <span style="font-size: 0.75rem; color: #666; display: block; text-align: center; padding: 4px 0;">Image <%= idx + 1 %></span>
+                            </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                    <% } %>
+                    <input name="gallery" class="form-control" type="file" accept="image/*" multiple>
+                    <small class="form-text text-muted">Upload new gallery images (up to 10). Uploading new images will replace existing gallery (optional)</small>
                 </label>
 
                 <label class="field">
