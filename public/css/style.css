@@ -1194,3 +1194,197 @@ img {
         font-size: 1.5rem;
     }
 }
+
+
+/* Filter Bar */
+.filters-bar{
+    gap: 2rem;          /* more spacing between filters */
+    padding-left: 2.2rem; /* little left padding */
+}
+
+.filters-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+
+    overflow-x: auto;   /* optional for mobile scroll */
+    white-space: nowrap;
+    padding: 10px 0;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    min-width: 80px;
+}
+/* =========================
+   TOP SECTION
+========================= */
+.top-filters-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1.5rem;
+
+    margin: 2rem 0;
+}
+
+/* =========================
+   FILTER BAR
+========================= */
+.filters-bar{
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 14px 20px;
+
+    border: 2px solid #c4956a;
+    border-radius: 999px;
+
+    background: #fff;
+
+    scrollbar-width: none;
+
+    box-shadow: 0 6px 20px rgba(196,149,106,0.12);
+}
+
+.filters-bar::-webkit-scrollbar{
+    display: none;
+}
+
+/* =========================
+   TAX TOGGLE RIGHT SIDE
+========================= */
+/* =========================
+   TAX TOGGLE RIGHT SIDE
+========================= */
+.tax-toggle-wrapper{
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 1rem;
+
+    padding: 12px 18px;
+
+    border: 2px solid #d9d9d9;
+    border-radius: 999px;
+
+    background: white;
+
+    white-space: nowrap;
+
+    margin-left: auto;
+
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* TEXT */
+.tax-text{
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #555;
+}
+
+/* =========================
+   TOGGLE BUTTON
+========================= */
+.switch{
+    position: relative;
+    display: inline-block;
+
+    width: 56px;
+    height: 30px;
+}
+
+.switch input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* SLIDER BACKGROUND */
+.slider{
+    position: absolute;
+    cursor: pointer;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: #cfcfcf;
+
+    transition: 0.3s ease;
+
+    border-radius: 999px;
+}
+
+/* ROUND CIRCLE */
+.slider:before{
+    position: absolute;
+    content: "";
+
+    height: 22px;
+    width: 22px;
+
+    left: 4px;
+    top: 4px;
+
+    background-color: white;
+
+    transition: 0.3s ease;
+
+    border-radius: 50%;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ACTIVE STATE */
+.switch input:checked + .slider{
+    background-color: #c4956a;
+}
+
+.switch input:checked + .slider:before{
+    transform: translateX(26px);
+}
+.tax-toggle-wrapper{
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 1rem;
+
+    padding: 12px 18px;
+
+    border: 2px solid #d9d9d9;
+    border-radius: 999px;
+
+    background: white;
+
+    white-space: nowrap;
+
+    margin-left: auto;
+
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.filters-bar { display: flex; align-items: center; overflow-x: auto; gap: 3.5rem; margin: 1rem 0 2rem; padding-left: 3rem;padding-bottom: 1rem; scrollbar-width: none; }
+.filters-bar::-webkit-scrollbar { display: none; }
+.filter-item { display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.6; min-width: max-content; cursor: pointer; transition: all 0.2s ease; text-decoration: none; color: #1a1a1a; }
+.filter-item:hover { opacity: 1; transform: translateY(-2px); color: #1a1a1a; }
+.filter-item.active { opacity: 1; border-bottom: 2px solid #1a1a1a; padding-bottom: 5px; }
+.filter-item i { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.filter-item span { font-size: 0.85rem; font-weight: 500; }

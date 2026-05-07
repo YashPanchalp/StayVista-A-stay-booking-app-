@@ -8,9 +8,10 @@ const flashListingNotFound = (req, res) => {
 };
 
 module.exports.index = async (req,res) => {
-  const result = await listingService.getAllListings();
+  const category = req.query.category;
+  const result = await listingService.getAllListings(category);
   if (result.success) {
-    res.render("listings/index", { allListings: result.listings });
+    res.render("listings/index", { allListings: result.listings, selectedCategory: category });
   } else {
     req.flash("error", "Error fetching listings");
     res.redirect("/listings");

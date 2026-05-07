@@ -9,7 +9,20 @@ const geocoder = NodeGeocoder({
 module.exports.getCoordinates = async (location, country) => {
     try {
         const searchQuery = country ? `${location}, ${country}` : location;
-        const res = await geocoder.geocode(searchQuery);
+        let res = await geocoder.geocode(searchQuery);
+        
+        // Fallback 1: Try without the country
+        if ((!res || res.length === 0) && country) {
+            console.log(`Geocoding failed for "${searchQuery}", falling back to "${location}"`);
+            res = await geocoder.geocode(location);
+        }
+        
+        // Fallback 2: Try with just the first part of the location (e.g. city name)
+        if ((!res || res.length === 0) && location.includes(',')) {
+            const firstPart = location.split(',')[0].trim();
+            console.log(`Geocoding failed for "${location}", falling back to first part: "${firstPart}"`);
+            res = await geocoder.geocode(firstPart);
+        }
         
         if (res && res.length > 0) {
             const { latitude, longitude } = res[0];

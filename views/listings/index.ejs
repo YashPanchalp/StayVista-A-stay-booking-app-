@@ -13,6 +13,47 @@
         </a>
     </div>
 
+    <!-- Filter Bar -->
+    <div class="filters-bar">
+        <% 
+        const categories = [
+            { name: 'Trending', icon: 'bi-fire' },
+            { name: 'Rooms', icon: 'bi-house-fill' },
+            { name: 'Iconic Cities', icon: 'bi-buildings' },
+            { name: 'Mountains', icon: 'bi-triangle-fill' },
+            { name: 'Castles', icon: 'bi-bank' },
+            { name: 'Amazing Pools', icon: 'bi-water' },
+            { name: 'Camping', icon: 'bi-tree-fill' },
+            { name: 'Farms', icon: 'bi-flower1' },
+            { name: 'Arctic', icon: 'bi-snow' }
+        ];
+        %>
+        
+        <a href="/listings" class="filter-item <%= typeof selectedCategory === 'undefined' || !selectedCategory ? 'active' : '' %>">
+            <i class="bi bi-globe"></i>
+            <span>All Stays</span>
+        </a>
+        
+        <% categories.forEach(cat => { %>
+            <a href="/listings?category=<%= encodeURIComponent(cat.name) %>" class="filter-item <%= typeof selectedCategory !== 'undefined' && selectedCategory === cat.name ? 'active' : '' %>">
+                <i class="bi <%= cat.icon %>"></i>
+                <span><%= cat.name %></span>
+            </a>
+        <% }) %>
+        <!-- TAX TOGGLE -->
+        <div class="tax-toggle-wrapper">
+    
+        <span class="tax-text">Display total before taxes</span>
+
+        <label class="switch">
+        <input type="checkbox" id="taxToggle">
+        <span class="slider"></span>
+        </label>
+        </div>
+    </div>
+
+   
+
     <% if (allListings.length) { %>
         <div class="listing-grid">
             <% allListings.forEach((listing, index) => { %>

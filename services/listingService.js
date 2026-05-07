@@ -43,12 +43,17 @@ module.exports.updateExistingListing = async (listingId, updateData, files) => {
         updateData.image = processedImages.image;
         updateData.gallery = processedImages.gallery;
         
-        // Geocode the location if location or country has changed
-        if (updateData.location !== listing.location || updateData.country !== listing.country) {
+        // Geocode the location if location or country has changed, or always do it if forcing an update
+        if (updateData.location !== listing.location || updateData.country !== listing.country || true) {
             const coordinatesData = await getCoordinates(updateData.location, updateData.country);
             updateData.geometry = coordinatesData.geometry;
         }
         
+        // Handle category unchecking (if array is undefined in body, set it to empty array)
+        if (!updateData.category) {
+            updateData.category = [];
+        }
+
         // Update and save
         const updatedListing = await Listing.findByIdAndUpdate(listingId, updateData, { new: true });
         return { success: true, listing: updatedListing };
@@ -59,9 +64,13 @@ module.exports.updateExistingListing = async (listingId, updateData, files) => {
 };
 
 // Get all listings
-module.exports.getAllListings = async () => {
+module.exports.getAllListings = async (filterCategory = null) => {
     try {
-        const listings = await Listing.find({});
+        let query = {};
+        if (filterCategory) {
+            query.category = filterCategory;
+        }
+        const listings = await Listing.find(query);
         return { success: true, listings };
     } catch (error) {
         console.error("Error fetching listings:", error);
