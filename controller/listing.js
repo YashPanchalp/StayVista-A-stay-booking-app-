@@ -1,5 +1,5 @@
 const Listing = require("../models/listing");
-const { processMainImage, processGalleryImages, processAllImages } = require("../utils/imageProcessor.js");
+const listingService = require("../services/listingService.js");
 
 //if not found listing
 const flashListingNotFound = (req, res) => {
@@ -8,8 +8,13 @@ const flashListingNotFound = (req, res) => {
 };
 
 module.exports.index = async (req,res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index",{allListings})
+  const result = await listingService.getAllListings();
+  if (result.success) {
+    res.render("listings/index", { allListings: result.listings });
+  } else {
+    req.flash("error", "Error fetching listings");
+    res.redirect("/listings");
+  }
 }
 
 module.exports.renderNewForm = (req,res) => {
@@ -17,132 +22,120 @@ module.exports.renderNewForm = (req,res) => {
 }
 
 module.exports.showListing = async (req,res) => {
-  //get the id of the data from req and then search all items for it
   let {id} = req.params;
-  //from objectId of reviews and owner get all details using populate
-  const listing = await Listing.findById(id)
-                                .populate({path :"reviews",
-                                           populate : "author"}) //nested populate to get author
-                                .populate("owner");
-  if(!listing) {
+  const result = await listingService.getListingById(id);
+  
+  if (!result.success) {
     return flashListingNotFound(req, res);
   }
-  res.render("listings/show" , {listing});
+  
+  res.render("listings/show", { listing: result.listing });
 }
 
-module.exports.createListing  = async (req,res) => {
-  //from name acess them from req body -> where names are as object listing.value
-  //create new listing 
-  const newListing = new Listing(req.body.listing);
-  newListing.owner = req.user._id; //assign the owner's id to listing
+module.exports.createListing = async (req,res) => {
+  const result = await listingService.createNewListing(
+    req.body.listing,
+    req.user._id,
+    req.files
+  );
   
-  // Process and assign images using utility function
-  const processedImages = processAllImages(req.files, null, []);
-  newListing.image = processedImages.image;
-  newListing.gallery = processedImages.gallery;
-  
-  await newListing.save();
-  //flash message
-  req.flash("success", "Your new StayVista listing has been published successfully.");
-  res.redirect("/listings");
+  if (result.success) {
+    req.flash("success", "Your new StayVista listing has been published successfully.");
+    res.redirect("/listings");
+  } else {
+    req.flash("error", result.error || "Error creating listing");
+    res.redirect("/listings/new");
+  }
 }
 
-module.exports.renderEditFrom =  async (req,res) => {
-  //get the id and load the listing
+module.exports.renderEditFrom = async (req,res) => {
   let {id} = req.params;
-  const listing = await Listing.findById(id);
-  if(!listing) {
+  const result = await listingService.getListingById(id);
+  
+  if (!result.success) {
     return flashListingNotFound(req, res);
   }
-  res.render("listings/edit" , {listing});
+  
+  res.render("listings/edit", { listing: result.listing });
 }
 
 module.exports.updateListing = async (req,res) => {
   let {id} = req.params;
   
-  // Find the listing first to preserve images if not updating
-  const listing = await Listing.findById(id);
+  const result = await listingService.updateExistingListing(
+    id,
+    req.body.listing,
+    req.files
+  );
   
-  // Update listing data
-  const updateData = {...req.body.listing};
-  
-  // Process and assign images using utility functions
-  const processedImages = processAllImages(req.files, listing.image, listing.gallery || []);
-  updateData.image = processedImages.image;
-  updateData.gallery = processedImages.gallery;
-  
-  //from this id we can find and update values from :: listing object of req body
-  await Listing.findByIdAndUpdate(id, updateData);
-  //flash message
-  req.flash("success", "Your listing details have been updated successfully.");
-  res.redirect(`/listings/${id}`);
+  if (result.success) {
+    req.flash("success", "Your listing details have been updated successfully.");
+    res.redirect(`/listings/${id}`);
+  } else {
+    req.flash("error", result.error || "Error updating listing");
+    res.redirect(`/listings/${id}/edit`);
+  }
 }
 
-module.exports.deleteListing =  async (req,res) => {
+module.exports.deleteListing = async (req,res) => {
   let {id} = req.params;
-  let deletedListing = await Listing.findByIdAndDelete(id);
-  console.log(deletedListing);
-  //falsh message
-  req.flash("success", "Your listing has been permanently removed.");
-  res.redirect("/listings");
+  
+  const result = await listingService.deleteListing(id);
+  
+  if (result.success) {
+    req.flash("success", "Your listing has been permanently removed.");
+    res.redirect("/listings");
+  } else {
+    req.flash("error", result.error || "Error deleting listing");
+    res.redirect(`/listings/${id}`);
+  }
 }
 
 module.exports.renderUploadImagesForm = async (req,res) => {
   let {id} = req.params;
-  const listing = await Listing.findById(id);
-  if(!listing) {
+  const result = await listingService.getListingById(id);
+  
+  if (!result.success) {
     return flashListingNotFound(req, res);
   }
-  res.render("listings/upload-images", {listing});
+  
+  res.render("listings/upload-images", { listing: result.listing });
 }
 
 module.exports.uploadListingImages = async (req,res) => {
   let {id} = req.params;
-  const listing = await Listing.findById(id);
   
-  if(!listing) {
-    return flashListingNotFound(req, res);
+  const result = await listingService.uploadListingImages(id, req.files);
+  
+  if (result.success) {
+    req.flash("success", "HD images uploaded successfully for your listing!");
+    res.redirect(`/listings/${id}`);
+  } else {
+    req.flash("error", result.error || "Error uploading images");
+    res.redirect(`/listings/${id}/upload-images`);
   }
-  
-  // Process and assign images using utility functions
-  const processedImages = processAllImages(req.files, listing.image, listing.gallery || []);
-  listing.image = processedImages.image;
-  listing.gallery = processedImages.gallery;
-  
-  await listing.save();
-  req.flash("success", "HD images uploaded successfully for your listing!");
-  res.redirect(`/listings/${id}`);
 }
 
 module.exports.deleteMainImage = async (req,res) => {
   let {id} = req.params;
-  const listing = await Listing.findById(id);
   
-  if(!listing) {
-    return res.status(404).json({error: "Listing not found"});
+  const result = await listingService.deleteMainImage(id);
+  
+  if (result.success) {
+    res.json({success: true, message: "Main image deleted successfully"});
+  } else {
+    res.status(404).json({error: result.error});
   }
-  
-  // Delete main image
-  listing.image = undefined;
-  await listing.save();
-  
-  res.json({success: true, message: "Main image deleted successfully"});
 }
 
 module.exports.deleteGalleryImage = async (req,res) => {
   let {id, index} = req.params;
-  const listing = await Listing.findById(id);
   
-  if(!listing) {
-    return res.status(404).json({error: "Listing not found"});
-  }
+  const result = await listingService.deleteGalleryImage(id, index);
   
-  // Remove gallery image at specified index
-  if (listing.gallery && listing.gallery.length > parseInt(index)) {
-    listing.gallery.splice(parseInt(index), 1);
-    await listing.save();
+  if (result.success) {
     res.json({success: true, message: "Gallery image deleted successfully"});
   } else {
-    res.status(400).json({error: "Image not found"});
+    res.status(404).json({error: result.error});
   }
 }
