@@ -12,13 +12,14 @@ const ExpressError = require("./utils/ExpressError.js");
 const asyncWarp = require("./utils/asyncWrap().js");
 const { throws } = require("node:assert");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const User = require("./models/user.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
 //----------------------------------------------------------
-
+const MONGO_URL = process.env.MONGO_URL;
 //----------------path set and ejs------------
 app.set("view engine" , "ejs");
 app.set("views", path.join(__dirname,"views"));
@@ -28,9 +29,25 @@ app.use(express.static(path.join(__dirname,"/public")))
 app.use(methodOverride("_method"));
 //-------------------------------------------
 
+//----mongo session store
+const store = MongoStore.create(
+  {
+      mongoUrl:MONGO_URL,
+      crypto : {
+        secret: process.env.SESSION_SECRET,
+      },
+      touchAfter: 24*3600,
+  }
+);
+store.on("error", () => {
+  console.log("ERROR in Mongo Session Store", error);
+})
+
+
 //----------express session define ------
 const sessionOptions = {
-   secret : "mysupersecretcode", //async
+   store, //passing mongosession values to local session store
+   secret : process.env.SESSION_SECRET, //async
    resave : false,
    saveUninitialized: true,
 
@@ -64,7 +81,6 @@ app.use((req, res, next) => {
 
 
 // Connect to MongoDB
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 main().then(() => {
   console.log("Database connection established");
 }).catch((err) => {

@@ -78,6 +78,25 @@ module.exports.getAllListings = async (filterCategory = null) => {
     }
 };
 
+// Search listings by location
+module.exports.searchByLocation = async (searchLocation) => {
+    try {
+        // Case-insensitive search using regex
+        const query = {
+            $or: [
+                { location: { $regex: searchLocation, $options: 'i' } },
+                { country: { $regex: searchLocation, $options: 'i' } },
+                { title: { $regex: searchLocation, $options: 'i' } }
+            ]
+        };
+        const listings = await Listing.find(query);
+        return { success: true, listings };
+    } catch (error) {
+        console.error("Error searching listings by location:", error);
+        return { success: false, error: error.message };
+    }
+};
+
 // Get a single listing with populated references
 module.exports.getListingById = async (listingId) => {
     try {

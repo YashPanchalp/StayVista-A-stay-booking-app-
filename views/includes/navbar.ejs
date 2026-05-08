@@ -15,7 +15,7 @@
         </a>
         <a class="nav-link site-nav-link <%= (currentPath.startsWith('/listings') && currentPath !== '/listings/new') ? 'active' : '' %>" href="/listings">
           <i class="bi bi-grid-3x3-gap"></i>
-          Explore Stays
+          Explore Stays  
         </a>
         <a class="nav-link site-nav-link <%= currentPath === '/listings/new' ? 'active' : '' %>" href="/listings/new">
           <i class="bi bi-plus-circle"></i>
@@ -24,12 +24,14 @@
       </div>
 
       <!-- SEARCH BAR -->
-      <form class="modern-search mx-lg-5 my-3 my-lg-0">
+      <form class="modern-search mx-lg-5 my-3 my-lg-0" action="/listings/search" method="GET">
         <i class="bi bi-search"></i>
 
         <input 
           type="text" 
+          name="location"
           placeholder="Search destinations..."
+          required
         >
 
         <button type="submit">

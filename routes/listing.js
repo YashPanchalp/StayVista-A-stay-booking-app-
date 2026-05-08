@@ -14,6 +14,9 @@ const { multipleFields } = require("../utils/upload.js")
 //(1)index -listing routes
 router.get("/" , asyncWarp(listingController.index));
 
+//(1.5) search - search by location
+router.get("/search" , asyncWarp(listingController.searchListings));
+
 //written before bec "new" can consider as :id from second route
 //(3)new listing - new and create routes
 router.get("/new" , isLoggedIn, listingController.renderNewForm)

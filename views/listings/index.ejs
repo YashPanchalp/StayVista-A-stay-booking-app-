@@ -4,7 +4,11 @@
     <div class="listing-page__header">
         <div>
             <span class="eyebrow"><i class="bi bi-stars"></i> Curated collection</span>
-            <h1>Explore Stays</h1>
+            <% if (typeof searchLocation !== 'undefined' && searchLocation) { %>
+                <h1>Search Results for "<%= searchLocation %>"</h1>
+            <% } else { %>
+                <h1>Explore Stays</h1>
+            <% } %>
             <p>Browse stylish stays, premium hotels, and homestays built for comfort and clean design.</p>
         </div>
         <a class="btn btn-accent" href="/listings/new">

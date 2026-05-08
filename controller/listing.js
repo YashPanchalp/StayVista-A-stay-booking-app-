@@ -18,6 +18,26 @@ module.exports.index = async (req,res) => {
   }
 }
 
+module.exports.searchListings = async (req,res) => {
+  const location = req.query.location;
+  if (!location || location.trim() === "") {
+    req.flash("error", "Please enter a location to search.");
+    return res.redirect("/listings");
+  }
+  
+  const result = await listingService.searchByLocation(location);
+  if (result.success) {
+    res.render("listings/index", { 
+      allListings: result.listings, 
+      searchLocation: location,
+      selectedCategory: null
+    });
+  } else {
+    req.flash("error", "Error searching listings");
+    res.redirect("/listings");
+  }
+}
+
 module.exports.renderNewForm = (req,res) => {
   res.render("listings/new")
 }
