@@ -270,6 +270,85 @@ img {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
+/* MODERN SEARCH BAR */
+.modern-search{
+    margin-left: 2rem;   /* adjust as needed */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: #fff;
+    border: 1.5px solid #e5e5e5;
+    padding: 8px 10px 8px 14px;
+    border-radius: 50px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+.modern-search{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: #fff;
+    border: 1.5px solid #e5e5e5;
+
+    padding: 8px 10px 8px 14px;
+    border-radius: 50px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+
+    transition: all 0.3s ease;
+}
+
+.modern-search:hover{
+    box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+    border-color: #c4956a;
+}
+
+.modern-search i{
+    color: #777;
+    font-size: 0.95rem;
+}
+
+.modern-search input{
+    border: none;
+    outline: none;
+    background: transparent;
+
+    width: 220px;
+    font-size: 0.95rem;
+}
+
+.modern-search button{
+    border: none;
+    background: #c4956a;
+    color: white;
+
+    padding: 8px 18px;
+    border-radius: 30px;
+
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.modern-search button:hover{
+    background: #b68458;
+    transform: translateY(-1px);
+}
+
+/* MOBILE */
+@media(max-width: 991px){
+
+    .modern-search{
+        margin: 18px 0;
+        width: 100%;
+    }
+
+    .modern-search input{
+        width: 100%;
+    }
+}
+
 /* Low opacity navbar when home hero section is present on page */
 .site-body:has(.home-hero) .site-navbar {
     position: fixed;
@@ -443,7 +522,7 @@ img {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.71rem 1rem;
     border-radius: 999px;
     border: 1px solid rgba(196, 149, 106, 0.3);
     color: var(--accent-strong);
@@ -643,7 +722,8 @@ img {
 .listing-page__header .btn,
 .form-page__intro .btn {
     align-self: flex-start;
-    margin-top: 0.5rem;
+    border-radius: 5rem;
+    padding: 0.48rem 0.9rem;
 }
 
 .listing-page__header h1,
@@ -1388,3 +1468,9 @@ img {
 .filter-item.active { opacity: 1; border-bottom: 2px solid #1a1a1a; padding-bottom: 5px; }
 .filter-item i { font-size: 1.5rem; margin-bottom: 0.5rem; }
 .filter-item span { font-size: 0.85rem; font-weight: 500; }
+
+.tax-info{
+    font-size: 90%;
+    font-weight: 600;
+    display: none;
+}

@@ -43,7 +43,7 @@
         <!-- TAX TOGGLE -->
         <div class="tax-toggle-wrapper">
     
-        <span class="tax-text">Display total before taxes</span>
+        <span class="tax-text">Display total after taxes</span>
 
         <label class="switch">
         <input type="checkbox" id="taxToggle">
@@ -68,7 +68,7 @@
                             <p><%= listing.country %></p>
                         </div>
                         <div class="listing-card__footer">
-                            <span class="listing-card__price">&#8377; <%= Number(listing.price || 0).toLocaleString("en-IN") %> <small>/ night</small></span>
+                            <span class="listing-card__price">&#8377; <%= Number(listing.price || 0).toLocaleString("en-IN") %> <small>/ night</small>&nbsp;<span class="tax-info">&nbsp; + &#8377; <%= Number(listing.price || 0 )*(0.18).toLocaleString("en-IN")%> tax</span></span>
                             <span class="listing-card__action">View stay <i class="bi bi-arrow-right"></i></span>
                         </div>
                     </div>
@@ -83,3 +83,22 @@
         </div>
     <% } %>
 </section>
+
+
+<script>
+    let taxSwtich = document.getElementById("taxToggle");
+    let taxInfo  = document.getElementsByClassName("tax-info");
+
+    taxSwtich.addEventListener("click", () => {
+        console.log("clicked");
+
+        for(info of taxInfo){
+            if(info.style.display != "inline"){
+                info.style.display = "inline";
+            }else {
+                info.style.display = "none";
+            }
+        }
+    })
+</script>
+

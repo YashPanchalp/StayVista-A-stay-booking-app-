@@ -1,14 +1,14 @@
 <nav class="navbar navbar-expand-lg site-navbar">
-  <div class="container-fluid site-navbar__inner">
+  <div class="container-fluid site-navbar__inner" style="gap:1.5rem;">
     <a class="navbar-brand site-brand" href="/">
       <span class="site-brand__mark"><i class="bi bi-house-heart-fill"></i></span>
-      <span>StayVista</span>
+      <span style="font-size: larger;">StayVista</span>
     </a>
     <button class="navbar-toggler site-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav me-auto site-nav-group">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="gap:2rem;">
+      <div class="navbar-nav site-nav-group" style="gap:2rem;">
         <a class="nav-link site-nav-link <%= currentPath === '/' ? 'active' : '' %>" aria-current="page" href="/">
           <i class="bi bi-house-door"></i>
           Home
@@ -22,6 +22,21 @@
           Add a Stay
         </a>
       </div>
+
+      <!-- SEARCH BAR -->
+      <form class="modern-search mx-lg-5 my-3 my-lg-0">
+        <i class="bi bi-search"></i>
+
+        <input 
+          type="text" 
+          placeholder="Search destinations..."
+        >
+
+        <button type="submit">
+          Search
+        </button>
+      </form>
+
       <div class="navbar-nav ms-auto site-nav-group">
         <% if (currentUser) { %>
           <a class="nav-link site-nav-link" href="/logout">
