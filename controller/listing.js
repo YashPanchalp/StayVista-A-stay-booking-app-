@@ -1,6 +1,9 @@
 const Listing = require("../models/listing");
 const listingService = require("../services/listingService.js");
 
+// Define categories list once
+const CATEGORIES = ['Trending', 'Rooms', 'Iconic Cities', 'Mountains', 'Castles', 'Amazing Pools', 'Camping', 'Farms', 'Arctic'];
+
 //if not found listing
 const flashListingNotFound = (req, res) => {
   req.flash("error", "We couldn't find the requested listing.");
@@ -39,7 +42,7 @@ module.exports.searchListings = async (req,res) => {
 }
 
 module.exports.renderNewForm = (req,res) => {
-  res.render("listings/new")
+  res.render("listings/new", { categories: CATEGORIES })
 }
 
 module.exports.showListing = async (req,res) => {
@@ -77,7 +80,7 @@ module.exports.renderEditFrom = async (req,res) => {
     return flashListingNotFound(req, res);
   }
   
-  res.render("listings/edit", { listing: result.listing });
+  res.render("listings/edit", { listing: result.listing, categories: CATEGORIES });
 }
 
 module.exports.updateListing = async (req,res) => {

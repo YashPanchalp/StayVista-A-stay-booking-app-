@@ -80,7 +80,6 @@
                     <span class="mb-3 d-block fw-semibold">Property Categories</span>
                     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
                         <% 
-                        const categories = ['Trending', 'Rooms', 'Iconic Cities', 'Mountains', 'Castles', 'Amazing Pools', 'Camping', 'Farms', 'Arctic'];
                         const selectedCats = listing.category || [];
                         categories.forEach((cat, index) => { 
                             const isChecked = selectedCats.includes(cat) ? 'checked' : '';

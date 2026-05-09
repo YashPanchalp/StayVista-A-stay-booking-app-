@@ -87,9 +87,30 @@ main().then(() => {
   console.error("Database connection error:", err);
 });
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(MONGO_URL, {
+    serverSelectionTimeoutMS: 30000,
+    socketTimeoutMS: 60000,
+    connectTimeoutMS: 30000,
+    retryWrites: true,
+    w: "majority",
+    maxPoolSize: 10,
+    minPoolSize: 2,
+    compressors: 'snappy'
+  });
 }
 
+// MongoDB connection event handlers
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected from MongoDB');
+});
 
 // Middleware to pass current path to all templates
 app.use((req, res, next) => {

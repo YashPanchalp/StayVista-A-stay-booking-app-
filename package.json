@@ -1,5 +1,5 @@
 {
-  "engines":{
+  "engines": {
     "node": "22.20.0"
   },
   "name": "airbnb",
@@ -8,7 +8,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm rebuild"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "express-session": "^1.19.0",
     "joi": "^18.1.2",
     "method-override": "^3.0.0",
+    "mongodb": "^7.2.0",
     "mongoose": "^9.3.3",
     "multer": "^2.1.1",
     "node-geocoder": "^4.4.1",

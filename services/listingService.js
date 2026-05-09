@@ -68,7 +68,8 @@ module.exports.getAllListings = async (filterCategory = null) => {
     try {
         let query = {};
         if (filterCategory) {
-            query.category = filterCategory;
+            // Use $in to search within the category array
+            query.category = { $in: [filterCategory] };
         }
         const listings = await Listing.find(query);
         return { success: true, listings };
