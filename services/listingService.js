@@ -1,10 +1,54 @@
 const Listing = require("../models/listing");
 const { processAllImages } = require("../utils/imageProcessor.js");
 const { getCoordinates } = require("../utils/geocoder.js");
+const { cloudinary } = require("../utils/upload.js");
 
 /**
  * Service for handling listing operations with geocoding and image processing
  */
+
+/**
+ * Delete images from Cloudinary
+ * @param {Array} imageIds - Array of Cloudinary public IDs to delete
+ */
+const deleteFromCloudinary = async (imageIds) => {
+  try {
+    if (!imageIds || imageIds.length === 0) return;
+    
+    for (const id of imageIds) {
+      if (id) {
+        await cloudinary.uploader.destroy(id);
+        console.log(`Deleted image from Cloudinary: ${id}`);
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting images from Cloudinary:", error);
+    // Don't throw error to prevent blocking the operation
+  }
+};
+
+/**
+ * Extract Cloudinary IDs from listing images
+ * @param {Object} listing - Listing document
+ * @returns {Array} Array of Cloudinary public IDs
+ */
+const extractCloudinaryIds = (listing) => {
+  const ids = [];
+  
+    if (listing.image?.cloudinary_id) {
+        ids.push(listing.image.cloudinary_id);
+  }
+  
+  if (listing.gallery && listing.gallery.length > 0) {
+    listing.gallery.forEach(img => {
+      if (img.cloudinary_id) {
+        ids.push(img.cloudinary_id);
+      }
+    });
+  }
+  
+  return ids;
+};
 
 // Create a new listing with geocoding and image processing
 module.exports.createNewListing = async (listingData, userId, files) => {
@@ -44,7 +88,7 @@ module.exports.updateExistingListing = async (listingId, updateData, files) => {
         updateData.gallery = processedImages.gallery;
         
         // Geocode the location if location or country has changed, or always do it if forcing an update
-        if (updateData.location !== listing.location || updateData.country !== listing.country || true) {
+        if (updateData.location !== listing.location || updateData.country !== listing.country) {
             const coordinatesData = await getCoordinates(updateData.location, updateData.country);
             updateData.geometry = coordinatesData.geometry;
         }
@@ -122,11 +166,19 @@ module.exports.getListingById = async (listingId) => {
 // Delete a listing
 module.exports.deleteListing = async (listingId) => {
     try {
-        const deletedListing = await Listing.findByIdAndDelete(listingId);
-        
-        if (!deletedListing) {
+        const listing = await Listing.findById(listingId);
+        if (!listing) {
             return { success: false, error: "Listing not found" };
         }
+        
+        // Delete associated images from Cloudinary
+        const cloudinaryIds = extractCloudinaryIds(listing);
+        if (cloudinaryIds.length > 0) {
+            await deleteFromCloudinary(cloudinaryIds);
+        }
+        
+        // Delete listing from database
+        const deletedListing = await Listing.findByIdAndDelete(listingId);
         
         return { success: true, listing: deletedListing };
     } catch (error) {
@@ -164,6 +216,11 @@ module.exports.deleteMainImage = async (listingId) => {
             return { success: false, error: "Listing not found" };
         }
         
+        // Delete from Cloudinary if cloudinary_id exists
+        if (listing.image?.cloudinary_id) {
+            await deleteFromCloudinary([listing.image.cloudinary_id]);
+        }
+        
         listing.image = undefined;
         await listing.save();
         
@@ -182,8 +239,15 @@ module.exports.deleteGalleryImage = async (listingId, imageIndex) => {
             return { success: false, error: "Listing not found" };
         }
         
-        const index = parseInt(imageIndex);
+        const index = Number.parseInt(imageIndex, 10);
         if (listing.gallery && listing.gallery.length > index) {
+            const deletedImage = listing.gallery[index];
+            
+            // Delete from Cloudinary if cloudinary_id exists
+            if (deletedImage?.cloudinary_id) {
+                await deleteFromCloudinary([deletedImage.cloudinary_id]);
+            }
+            
             listing.gallery.splice(index, 1);
             await listing.save();
             return { success: true, listing };

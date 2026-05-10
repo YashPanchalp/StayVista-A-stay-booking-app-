@@ -18,6 +18,15 @@ const User = require("./models/user.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
+// Initialize Cloudinary configuration
+require("./utils/cloudinaryConfig.js");
+
+// Validate Cloudinary credentials
+const { validateCredentials } = require("./utils/cloudinaryErrorHandler.js");
+if (!validateCredentials()) {
+  console.warn("⚠️  Warning: Cloudinary credentials not fully configured. Please update your .env file with CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET");
+}
+
 //----------------------------------------------------------
 const MONGO_URL = process.env.MONGO_URL;
 //----------------path set and ejs------------
