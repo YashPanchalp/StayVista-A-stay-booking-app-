@@ -1,0 +1,258 @@
+<%- layout("/layouts/boilerplate") %>
+
+<section class="form-page container" style="padding: 4rem 2rem 5rem 2rem;">
+    <div class="form-page__intro">
+        <div>
+            <span class="eyebrow"><i class="bi bi-chat-dots"></i> Contact Us</span>
+            <h1>Get in Touch</h1>
+            <p>We'd love to hear from you. Reach out with any questions or feedback.</p>
+        </div>
+    </div>
+
+    <div class="form-shell" style="padding: 2.5rem;">
+        <div class="contact-container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-envelope-at"></i></div>
+                    <h3>Email Support</h3>
+                    <p>For general inquiries and support</p>
+                    <a href="mailto:support@stayvista.com" class="contact-link">support@stayvista.com</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-telephone"></i></div>
+                    <h3>Phone Support</h3>
+                    <p>Call us during business hours</p>
+                    <a href="tel:+1-800-STAY-VIS" class="contact-link">+1-800-STAY-VIS</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-geo-alt"></i></div>
+                    <h3>Office Address</h3>
+                    <p>Visit our headquarters</p>
+                    <p class="address">123 Travel Street<br>Global City, GC 12345</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-chat-left-text"></i></div>
+                    <h3>Live Chat</h3>
+                    <p>Chat with our team in real-time</p>
+                    <a href="#" class="contact-link">Start Chat</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-clock"></i></div>
+                    <h3>Business Hours</h3>
+                    <p>Monday - Friday: 9 AM - 6 PM UTC<br>Saturday: 10 AM - 4 PM UTC</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="bi bi-speedometer2"></i></div>
+                    <h3>Response Time</h3>
+                    <p>We respond to all inquiries<br>within 24 business hours</p>
+                </div>
+            </div>
+
+            <div class="contact-form-section">
+                <h2>Send us a Message</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="How can we help?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us more..." rows="6" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-accent">Send Message</button>
+                </form>
+            </div>
+
+            <div class="faq-quick">
+                <h2>Quick Help</h2>
+                <p>Before contacting us, check if your question is answered in our <a href="/faqs" style="color: var(--accent); font-weight: 500;">FAQs</a>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact-container {
+        max-width: 1000px;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3.5rem;
+    }
+
+    .contact-card {
+        padding: 1.75rem;
+        border-radius: 16px;
+        background: rgba(196, 149, 106, 0.04);
+        border: 1px solid rgba(196, 149, 106, 0.12);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .contact-card:hover {
+        border-color: rgba(196, 149, 106, 0.25);
+        background: rgba(196, 149, 106, 0.08);
+        transform: translateY(-4px);
+    }
+
+    .contact-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .contact-card h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin: 0 0 0.75rem 0;
+        color: var(--text);
+    }
+
+    .contact-card p {
+        font-size: 0.95rem;
+        color: var(--muted);
+        margin: 0.5rem 0;
+    }
+
+    .contact-link {
+        display: inline-block;
+        margin-top: 0.75rem;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .contact-link:hover {
+        color: var(--accent-strong);
+        text-decoration: underline;
+    }
+
+    .address {
+        margin: 0.75rem 0 !important;
+        font-size: 0.9rem;
+    }
+
+    .contact-form-section {
+        background: rgba(196, 149, 106, 0.04);
+        border: 1px solid rgba(196, 149, 106, 0.12);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .contact-form-section h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        color: var(--text);
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: var(--text);
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--text);
+        background: white;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(196, 149, 106, 0.1);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+    }
+
+    .contact-form .btn {
+        align-self: flex-start;
+        padding: 0.9rem 2rem;
+    }
+
+    .faq-quick {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(110, 200, 158, 0.05);
+        border: 1px solid rgba(110, 200, 158, 0.12);
+        border-radius: 12px;
+    }
+
+    .faq-quick h2 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: var(--text);
+    }
+
+    .faq-quick p {
+        color: var(--muted);
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .contact-form-section {
+            padding: 1.5rem;
+        }
+
+        .contact-form .btn {
+            width: 100%;
+            align-self: stretch;
+            text-align: center;
+        }
+    }
+</style>

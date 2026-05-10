@@ -1,0 +1,379 @@
+<%- layout("/layouts/boilerplate") %>
+
+<section class="form-page container" style="padding: 4rem 2rem 5rem 2rem;">
+    <div class="form-page__intro">
+        <div>
+            <span class="eyebrow"><i class="bi bi-exclamation-triangle"></i> Report Issue</span>
+            <h1>Report a Problem</h1>
+            <p>Help us improve by reporting any issues you encounter on StayVista.</p>
+        </div>
+    </div>
+
+    <div class="form-shell" style="padding: 2.5rem;">
+        <div class="report-container">
+            <div class="issue-types">
+                <h2>Issue Categories</h2>
+                <div class="type-grid">
+                    <div class="type-card" data-type="booking">
+                        <i class="bi bi-calendar-check"></i>
+                        <h3>Booking Issue</h3>
+                        <p>Problems with bookings, dates, or reservations</p>
+                    </div>
+                    <div class="type-card" data-type="property">
+                        <i class="bi bi-house-exclamation"></i>
+                        <h3>Property Issue</h3>
+                        <p>Concerns about the property or amenities</p>
+                    </div>
+                    <div class="type-card" data-type="payment">
+                        <i class="bi bi-credit-card-2-back"></i>
+                        <h3>Payment Issue</h3>
+                        <p>Problems with payments or billing</p>
+                    </div>
+                    <div class="type-card" data-type="host">
+                        <i class="bi bi-person-exclamation"></i>
+                        <h3>Host/Guest Issue</h3>
+                        <p>Issues with communication or conduct</p>
+                    </div>
+                    <div class="type-card" data-type="technical">
+                        <i class="bi bi-gear-fill"></i>
+                        <h3>Technical Issue</h3>
+                        <p>App or website technical problems</p>
+                    </div>
+                    <div class="type-card" data-type="other">
+                        <i class="bi bi-chat-left-dots"></i>
+                        <h3>Other</h3>
+                        <p>Other issues or concerns</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-form-section">
+                <h2>Report Details</h2>
+                <form class="report-form">
+                    <div class="form-group">
+                        <label for="issue-type">Issue Type *</label>
+                        <select id="issue-type" name="issue-type" required>
+                            <option value="">Select an issue type</option>
+                            <option value="booking">Booking Issue</option>
+                            <option value="property">Property Issue</option>
+                            <option value="payment">Payment Issue</option>
+                            <option value="host">Host/Guest Issue</option>
+                            <option value="technical">Technical Issue</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="booking-id">Booking ID (if applicable)</label>
+                        <input type="text" id="booking-id" name="booking-id" placeholder="e.g., BK-123456">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Issue Title *</label>
+                        <input type="text" id="title" name="title" placeholder="Brief description of the issue" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Detailed Description *</label>
+                        <textarea id="description" name="description" placeholder="Please provide detailed information about the issue..." rows="7" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">When did this occur? *</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Attach Screenshots or Documents</label>
+                        <div class="file-upload">
+                            <i class="bi bi-cloud-upload"></i>
+                            <p>Drag and drop files or <span class="click-here">click here</span> to upload</p>
+                            <p class="file-hint">Supported: JPG, PNG, PDF (Max 10MB)</p>
+                            <input type="file" name="attachment" multiple hidden>
+                        </div>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="follow-up" name="follow-up" checked>
+                        <label for="follow-up">I'd like to be contacted about this issue</label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-accent">Submit Report</button>
+                        <button type="reset" class="btn btn-ghost">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="report-info">
+                <h3>What Happens Next?</h3>
+                <ul class="info-list">
+                    <li><strong>Review:</strong> Our team reviews all reports within 24 hours</li>
+                    <li><strong>Investigation:</strong> We investigate the issue thoroughly</li>
+                    <li><strong>Response:</strong> You'll receive updates via email or in-app notifications</li>
+                    <li><strong>Resolution:</strong> We work to resolve issues as quickly as possible</li>
+                </ul>
+
+                <h3>Tips for Better Reports</h3>
+                <ul class="info-list">
+                    <li>Be specific and detailed about what happened</li>
+                    <li>Include booking IDs, dates, and times when relevant</li>
+                    <li>Attach screenshots or documents as proof</li>
+                    <li>Stay factual and professional in your description</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .report-container {
+        max-width: 1000px;
+    }
+
+    .issue-types {
+        margin-bottom: 3rem;
+    }
+
+    .issue-types h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 1.5rem 0;
+        color: var(--text);
+    }
+
+    .type-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+    }
+
+    .type-card {
+        padding: 1.25rem;
+        border-radius: 12px;
+        background: rgba(196, 149, 106, 0.04);
+        border: 1px solid rgba(196, 149, 106, 0.12);
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .type-card:hover {
+        border-color: rgba(196, 149, 106, 0.25);
+        background: rgba(196, 149, 106, 0.08);
+        transform: translateY(-2px);
+    }
+
+    .type-card i {
+        font-size: 2rem;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+    }
+
+    .type-card h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem 0;
+        color: var(--text);
+    }
+
+    .type-card p {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin: 0;
+    }
+
+    .report-form-section {
+        background: rgba(196, 149, 106, 0.04);
+        border: 1px solid rgba(196, 149, 106, 0.12);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .report-form-section h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1.4rem;
+        color: var(--text);
+    }
+
+    .report-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group.checkbox {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .form-group.checkbox input {
+        width: auto;
+        margin: 0;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: var(--text);
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--text);
+        background: white;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(196, 149, 106, 0.1);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+    }
+
+    .file-upload {
+        border: 2px dashed rgba(196, 149, 106, 0.3);
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .file-upload:hover {
+        border-color: rgba(196, 149, 106, 0.5);
+        background: rgba(196, 149, 106, 0.04);
+    }
+
+    .file-upload i {
+        font-size: 2.5rem;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+    }
+
+    .file-upload p {
+        margin: 0.5rem 0;
+        color: var(--muted);
+    }
+
+    .file-hint {
+        font-size: 0.85rem !important;
+        color: var(--muted) !important;
+    }
+
+    .click-here {
+        color: var(--accent);
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .form-actions .btn {
+        padding: 0.9rem 1.8rem;
+    }
+
+    .report-info {
+        background: rgba(196, 149, 106, 0.04);
+        border: 1px solid rgba(196, 149, 106, 0.12);
+        border-radius: 12px;
+        padding: 2rem;
+    }
+
+    .report-info h3 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin: 0 0 1rem 0;
+        color: var(--text);
+    }
+
+    .report-info h3:first-child {
+        margin-top: 0;
+    }
+
+    .report-info h3:not(:first-child) {
+        margin-top: 1.5rem;
+    }
+
+    .info-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.5rem 0;
+    }
+
+    .info-list li {
+        padding: 0.5rem 0 0.5rem 2rem;
+        position: relative;
+        color: var(--muted);
+        font-size: 0.95rem;
+    }
+
+    .info-list li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+        .type-grid {
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .type-card {
+            padding: 1rem;
+        }
+
+        .type-card i {
+            font-size: 1.5rem;
+        }
+
+        .type-card h3 {
+            font-size: 0.85rem;
+        }
+
+        .type-card p {
+            font-size: 0.75rem;
+        }
+
+        .report-form-section {
+            padding: 1.5rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>

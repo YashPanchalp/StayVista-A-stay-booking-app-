@@ -1,0 +1,196 @@
+<%- layout("/layouts/boilerplate") %>
+
+<section class="form-page container" style="padding: 4rem 2rem 5rem 2rem;">
+    <div class="form-page__intro">
+        <div>
+            <span class="eyebrow"><i class="bi bi-info-circle"></i> About Us</span>
+            <h1>Welcome to StayVista</h1>
+            <p>Discover our mission and values in reimagining travel accommodations.</p>
+        </div>
+    </div>
+
+    <div class="form-shell" style="padding: 2.5rem;">
+        <div class="content-page">
+            <h2>Our Mission</h2>
+            <p>
+                At StayVista, we believe that travel should be seamless, authentic, and accessible to everyone. 
+                Our platform connects travelers with premium hotels, boutique homestays, and curated accommodations 
+                that go beyond the ordinary. We're committed to providing a polished booking experience that reflects 
+                the quality and care of every stay we offer.
+            </p>
+
+            <h2>What Makes Us Different</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-heart-fill"></i></div>
+                    <h3>Curated Stays</h3>
+                    <p>Every listing is carefully selected to ensure exceptional quality, cleanliness, and comfort for our guests.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+                    <h3>Trusted Hosts</h3>
+                    <p>We work with verified property owners and managers who share our commitment to guest satisfaction.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-lightning-charge"></i></div>
+                    <h3>Seamless Booking</h3>
+                    <p>Our intuitive platform makes it simple to search, compare, and book your perfect stay in minutes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                    <h3>Global Coverage</h3>
+                    <p>From bustling cities to serene mountain retreats, find premium accommodations worldwide.</p>
+                </div>
+            </div>
+
+            <h2>Our Values</h2>
+            <ul class="values-list">
+                <li><strong>Quality First:</strong> We prioritize quality over quantity, ensuring every stay meets our high standards.</li>
+                <li><strong>Transparency:</strong> Honest reviews, clear pricing, and no hidden fees — ever.</li>
+                <li><strong>Community:</strong> We support local hosts and sustainable tourism practices.</li>
+                <li><strong>Innovation:</strong> Continuously improving our platform to serve you better.</li>
+                <li><strong>Integrity:</strong> Your trust is our most valuable asset.</li>
+            </ul>
+
+            <h2>Get Started Today</h2>
+            <p>
+                Ready to explore premium stays? Browse our listings and find your next perfect getaway. 
+                Whether you're a traveler looking for your dream destination or a host wanting to list your property, 
+                StayVista is your trusted partner.
+            </p>
+
+            <div class="cta-buttons">
+                <a href="/listings" class="btn btn-accent">Explore Listings</a>
+                <a href="/listings/new" class="btn btn-ghost">List Your Property</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .content-page {
+        max-width: 800px;
+    }
+
+    .content-page h2 {
+        margin-top: 2.5rem;
+        margin-bottom: 1.25rem;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text);
+    }
+
+    .content-page h2:first-of-type {
+        margin-top: 0;
+    }
+
+    .content-page p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--muted);
+        margin-bottom: 1.25rem;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .feature-card {
+        padding: 1.75rem;
+        border-radius: 16px;
+        background: rgba(196, 149, 106, 0.05);
+        border: 1px solid rgba(196, 149, 106, 0.12);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        border-color: rgba(196, 149, 106, 0.25);
+        background: rgba(196, 149, 106, 0.08);
+        transform: translateY(-4px);
+    }
+
+    .feature-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--text);
+    }
+
+    .feature-card p {
+        font-size: 0.95rem;
+        margin-bottom: 0;
+        color: var(--muted);
+    }
+
+    .values-list {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0;
+    }
+
+    .values-list li {
+        padding: 1rem 0 1rem 2.5rem;
+        position: relative;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--muted);
+    }
+
+    .values-list li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--accent);
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2.5rem;
+        flex-wrap: wrap;
+    }
+
+    .cta-buttons .btn {
+        padding: 0.9rem 1.8rem;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .content-page h2 {
+            font-size: 1.4rem;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+        }
+
+        .cta-buttons .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>

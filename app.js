@@ -157,6 +157,30 @@ app.use("/listings/:id/reviews" , reviewRouter);
 const userRouter = require("./routes/user.js");
 app.use("/", userRouter);
 
+//About and Terms Routes -----
+app.get("/about", (req, res) => {
+  res.render("about");
+});
+
+app.get("/terms", (req, res) => {
+  res.render("terms");
+});
+
+app.get("/privacy", (req, res) => {
+  res.render("privacy");
+});
+
+app.get("/contact", (req, res) => {
+  res.render("contact");
+});
+
+app.get("/faqs", (req, res) => {
+  res.render("faqs");
+});
+
+app.get("/report", (req, res) => {
+  res.render("report");
+});
 
 //not found page route
 app.all(/.*/ , (req,res,next) => {
